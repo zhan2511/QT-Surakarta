@@ -1,0 +1,13 @@
+# ninja log v5
+3	1820	7330617033115788	Surakarta_autogen/timestamp	981acc13b89ce049
+3	1820	7330617033115788	Surakarta_autogen/mocs_compilation.cpp	981acc13b89ce049
+3	1820	7330617033115788	E:/QT_project/build-Surakarta-Desktop_Qt_6_6_2_MinGW_64_bit-Debug/Surakarta_autogen/timestamp	981acc13b89ce049
+3	1820	7330617033115788	E:/QT_project/build-Surakarta-Desktop_Qt_6_6_2_MinGW_64_bit-Debug/Surakarta_autogen/mocs_compilation.cpp	981acc13b89ce049
+1821	4078	7330617056497286	CMakeFiles/Surakarta.dir/Surakarta_autogen/mocs_compilation.cpp.obj	dfda4d17a40bdd2c
+1831	4131	7330617057086750	CMakeFiles/Surakarta.dir/main.cpp.obj	91c93f7f6f7ad65f
+7	232	7330617136174317	Surakarta_autogen/timestamp	981acc13b89ce049
+7	232	7330617136174317	Surakarta_autogen/mocs_compilation.cpp	981acc13b89ce049
+7	232	7330617136174317	E:/QT_project/build-Surakarta-Desktop_Qt_6_6_2_MinGW_64_bit-Debug/Surakarta_autogen/timestamp	981acc13b89ce049
+7	232	7330617136174317	E:/QT_project/build-Surakarta-Desktop_Qt_6_6_2_MinGW_64_bit-Debug/Surakarta_autogen/mocs_compilation.cpp	981acc13b89ce049
+247	3571	7330617169435924	CMakeFiles/Surakarta.dir/mainwindow.cpp.obj	bccc030c46ada964
+3572	4070	7330617174391941	Surakarta.exe	c71c02eb6d6222ab
