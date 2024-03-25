@@ -1,0 +1,9 @@
+E:/QT_project/build-untitled4-Desktop_Qt_6_6_2_MinGW_64_bit-Debug/CMakeFiles/untitled4.dir
+E:/QT_project/build-untitled4-Desktop_Qt_6_6_2_MinGW_64_bit-Debug/CMakeFiles/edit_cache.dir
+E:/QT_project/build-untitled4-Desktop_Qt_6_6_2_MinGW_64_bit-Debug/CMakeFiles/rebuild_cache.dir
+E:/QT_project/build-untitled4-Desktop_Qt_6_6_2_MinGW_64_bit-Debug/CMakeFiles/list_install_components.dir
+E:/QT_project/build-untitled4-Desktop_Qt_6_6_2_MinGW_64_bit-Debug/CMakeFiles/install.dir
+E:/QT_project/build-untitled4-Desktop_Qt_6_6_2_MinGW_64_bit-Debug/CMakeFiles/install/local.dir
+E:/QT_project/build-untitled4-Desktop_Qt_6_6_2_MinGW_64_bit-Debug/CMakeFiles/install/strip.dir
+E:/QT_project/build-untitled4-Desktop_Qt_6_6_2_MinGW_64_bit-Debug/CMakeFiles/untitled4_autogen_timestamp_deps.dir
+E:/QT_project/build-untitled4-Desktop_Qt_6_6_2_MinGW_64_bit-Debug/CMakeFiles/untitled4_autogen.dir
