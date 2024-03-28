@@ -12,7 +12,6 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QGroupBox>
-#include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QStackedWidget>
@@ -27,7 +26,6 @@ public:
     QWidget *centralwidget;
     QStackedWidget *stackedWidget;
     QWidget *startpage0;
-    QLabel *label;
     QPushButton *Start;
     QWidget *modepage1;
     QPushButton *Back;
@@ -36,6 +34,7 @@ public:
     QPushButton *newgame;
     QPushButton *spectator;
     QPushButton *loadgame;
+    QWidget *page3;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -54,12 +53,6 @@ public:
         stackedWidget->setMaximumSize(QSize(800, 550));
         startpage0 = new QWidget();
         startpage0->setObjectName("startpage0");
-        label = new QLabel(startpage0);
-        label->setObjectName("label");
-        label->setGeometry(QRect(0, 10, 801, 551));
-        label->setFrameShape(QFrame::Box);
-        label->setPixmap(QPixmap(QString::fromUtf8("rsc/Background_Picture.png")));
-        label->setScaledContents(true);
         Start = new QPushButton(startpage0);
         Start->setObjectName("Start");
         Start->setGeometry(QRect(450, 270, 301, 201));
@@ -90,9 +83,15 @@ public:
         verticalLayout->addWidget(loadgame);
 
         stackedWidget->addWidget(modepage1);
+        page3 = new QWidget();
+        page3->setObjectName("page3");
+        stackedWidget->addWidget(page3);
         MainWindow->setCentralWidget(centralwidget);
 
         retranslateUi(MainWindow);
+
+        stackedWidget->setCurrentIndex(1);
+
 
         QMetaObject::connectSlotsByName(MainWindow);
     } // setupUi
@@ -100,7 +99,6 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "MainWindow", nullptr));
-        label->setText(QString());
         Start->setText(QCoreApplication::translate("MainWindow", "START", nullptr));
         Back->setText(QCoreApplication::translate("MainWindow", "Back", nullptr));
         modeBox->setTitle(QString());

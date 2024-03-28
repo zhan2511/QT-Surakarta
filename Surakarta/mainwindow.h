@@ -19,5 +19,12 @@ public:
 
 private:
     Ui::MainWindow *ui;
+
+    // QWidget interface
+protected:
+
+    // QWidget interface
+protected:
+    void paintEvent(QPaintEvent *event);
 };
 #endif // MAINWINDOW_H
