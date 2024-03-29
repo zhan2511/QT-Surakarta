@@ -25,6 +25,6 @@ protected:
 
     // QWidget interface
 protected:
-    void paintEvent(QPaintEvent *event);
+    // void paintEvent(QPaintEvent *event);
 };
 #endif // MAINWINDOW_H

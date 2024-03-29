@@ -12,15 +12,23 @@ MainWindow::MainWindow(QWidget *parent)
     this->setFixedSize(820,570);
 
     ui->stackedWidget->setCurrentIndex(0);//设置首页
-
     connect(ui->Start,&QPushButton::clicked,this,[=](){
         ui->stackedWidget->setCurrentIndex(1);
     });//Start-切页1
-
     connect(ui->Back,&QPushButton::clicked,this,[=](){
         ui->stackedWidget->setCurrentIndex(0);
     });//Back-切页0
 
+
+    //插入首页背景
+    QPixmap pix;
+    bool ret= pix.load(":/rsc/Background_Picture.png");
+    if(!ret){qDebug()<<"pix wrong";}
+    ui->startpage0->GetPaintInfo_pix(pix);
+    ui->startpage0->GetPaintInfo_scale(pix.width()*1.1,pix.height());
+    ui->startpage0->GetPaintInfo_size(800,550);
+    ui->startpage0->GetPaintInfo_pos(0,-10);
+    ui->startpage0->update();
 
 }
 
@@ -29,12 +37,3 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-
-void MainWindow::paintEvent(QPaintEvent *event)// 画个首页背景
-{
-    QPainter painter(this);
-    QPixmap bground;
-    bground.load(":/rsc/Background_Picture.png");
-    bground=bground.scaled(bground.width()*0.8,bground.height()*0.7);//缩放
-    painter.drawPixmap(0,0,this->width(),this->height()*0.9,bground);
-}
