@@ -10,6 +10,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     this->setFixedSize(820,570);
+    this->setWindowIcon(QPixmap(":/rsc/Icon.jpg"));
+    this->setWindowTitle("Surakarta_Home");
 
     ui->stackedWidget->setCurrentIndex(0);//设置首页
 
@@ -34,7 +36,9 @@ void MainWindow::paintEvent(QPaintEvent *event)// 画个首页背景
 {
     QPainter painter(this);
     QPixmap bground;
-    bground.load(":/rsc/Background_Picture.png");
-    bground=bground.scaled(bground.width()*0.8,bground.height()*0.7);//缩放
-    painter.drawPixmap(0,0,this->width(),this->height()*0.9,bground);
+    bground.load(":/rsc/Background.png");
+    bground=bground.scaled(bground.width()*0.7,bground.height());//缩放
+    painter.drawPixmap(0,0,this->width()*0.7,this->height(),bground);
+
+    //绘制棋盘
 }
