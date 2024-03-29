@@ -17,6 +17,7 @@
 #include <QtWidgets/QStackedWidget>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
+#include <mywidget.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -25,12 +26,12 @@ class Ui_MainWindow
 public:
     QWidget *centralwidget;
     QStackedWidget *stackedWidget;
-    QWidget *startpage0;
+    MyWidget *startpage0;
     QPushButton *Start;
     QWidget *modepage1;
     QPushButton *Back;
     QGroupBox *modeBox;
-    QVBoxLayout *verticalLayout;
+    QVBoxLayout *vboxLayout;
     QPushButton *newgame;
     QPushButton *spectator;
     QPushButton *loadgame;
@@ -51,7 +52,7 @@ public:
         stackedWidget->setGeometry(QRect(10, 10, 800, 550));
         stackedWidget->setMinimumSize(QSize(800, 550));
         stackedWidget->setMaximumSize(QSize(800, 550));
-        startpage0 = new QWidget();
+        startpage0 = new MyWidget();
         startpage0->setObjectName("startpage0");
         Start = new QPushButton(startpage0);
         Start->setObjectName("Start");
@@ -65,22 +66,24 @@ public:
         modeBox = new QGroupBox(modepage1);
         modeBox->setObjectName("modeBox");
         modeBox->setGeometry(QRect(200, 170, 461, 351));
-        verticalLayout = new QVBoxLayout(modeBox);
-        verticalLayout->setObjectName("verticalLayout");
+        vboxLayout = new QVBoxLayout(modeBox);
+        vboxLayout->setSpacing(0);
+        vboxLayout->setObjectName("vboxLayout");
+        vboxLayout->setContentsMargins(0, 0, 0, 0);
         newgame = new QPushButton(modeBox);
         newgame->setObjectName("newgame");
 
-        verticalLayout->addWidget(newgame);
+        vboxLayout->addWidget(newgame);
 
         spectator = new QPushButton(modeBox);
         spectator->setObjectName("spectator");
 
-        verticalLayout->addWidget(spectator);
+        vboxLayout->addWidget(spectator);
 
         loadgame = new QPushButton(modeBox);
         loadgame->setObjectName("loadgame");
 
-        verticalLayout->addWidget(loadgame);
+        vboxLayout->addWidget(loadgame);
 
         stackedWidget->addWidget(modepage1);
         page3 = new QWidget();
@@ -90,7 +93,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        stackedWidget->setCurrentIndex(1);
+        stackedWidget->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
