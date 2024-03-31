@@ -2,5 +2,6 @@
     <qresource prefix="/">
         <file>rsc/Icon.jpg</file>
         <file>rsc/Background.png</file>
+        <file>rsc/Surakarta.png</file>
     </qresource>
 </RCC>

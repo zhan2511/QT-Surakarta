@@ -49,7 +49,7 @@ public:
         centralwidget->setMaximumSize(QSize(820, 570));
         stackedWidget = new QStackedWidget(centralwidget);
         stackedWidget->setObjectName("stackedWidget");
-        stackedWidget->setGeometry(QRect(10, 10, 800, 550));
+        stackedWidget->setGeometry(QRect(60, 90, 800, 550));
         stackedWidget->setMinimumSize(QSize(800, 550));
         stackedWidget->setMaximumSize(QSize(800, 550));
         startpage0 = new MyWidget();
@@ -93,7 +93,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        stackedWidget->setCurrentIndex(0);
+        stackedWidget->setCurrentIndex(2);
 
 
         QMetaObject::connectSlotsByName(MainWindow);

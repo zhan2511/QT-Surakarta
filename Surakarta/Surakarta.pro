@@ -9,11 +9,13 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    chess_window.cpp \
     main.cpp \
     mainwindow.cpp \
     mywidget.cpp \
 
 HEADERS += \
+    chess_window.h \
     mainwindow.h \
     mywidget.h \
 

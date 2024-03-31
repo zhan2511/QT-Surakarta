@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <chess_window.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -16,6 +17,8 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+
+    chess_window * chessboard = nullptr;
 
 private:
     Ui::MainWindow *ui;

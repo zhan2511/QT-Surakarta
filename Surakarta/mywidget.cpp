@@ -1,11 +1,11 @@
 #include "mywidget.h"
 #include <Qpainter>
 #include <QPixmap>
+#include <QtWidgets>
 
 MyWidget::MyWidget(QWidget *parent)
     : QWidget{parent}
 {}
-
 
 
 void MyWidget::paintEvent(QPaintEvent *event)// 画个背景
