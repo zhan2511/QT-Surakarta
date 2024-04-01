@@ -12,11 +12,13 @@ SOURCES += \
     chess_window.cpp \
     main.cpp \
     mainwindow.cpp \
+    mypushbutton.cpp \
     mywidget.cpp \
 
 HEADERS += \
     chess_window.h \
     mainwindow.h \
+    mypushbutton.h \
     mywidget.h \
 
 FORMS += \

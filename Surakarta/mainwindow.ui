@@ -54,10 +54,10 @@
      </size>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>1</number>
     </property>
     <widget class="MyWidget" name="startpage0">
-     <widget class="QPushButton" name="Start">
+     <widget class="MyPushbutton" name="Start">
       <property name="geometry">
        <rect>
         <x>450</x>
@@ -72,7 +72,7 @@
      </widget>
     </widget>
     <widget class="QWidget" name="modepage1">
-     <widget class="QPushButton" name="Back">
+     <widget class="MyPushbutton" name="Back">
       <property name="geometry">
        <rect>
         <x>20</x>
@@ -147,6 +147,11 @@
    <extends>QWidget</extends>
    <header location="global">mywidget.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>MyPushbutton</class>
+   <extends>QPushButton</extends>
+   <header location="global">mypushbutton.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

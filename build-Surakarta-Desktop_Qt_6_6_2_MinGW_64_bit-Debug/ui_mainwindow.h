@@ -17,6 +17,7 @@
 #include <QtWidgets/QStackedWidget>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
+#include <mypushbutton.h>
 #include <mywidget.h>
 
 QT_BEGIN_NAMESPACE
@@ -27,9 +28,9 @@ public:
     QWidget *centralwidget;
     QStackedWidget *stackedWidget;
     MyWidget *startpage0;
-    QPushButton *Start;
+    MyPushbutton *Start;
     QWidget *modepage1;
-    QPushButton *Back;
+    MyPushbutton *Back;
     QGroupBox *modeBox;
     QVBoxLayout *vboxLayout;
     QPushButton *newgame;
@@ -54,13 +55,13 @@ public:
         stackedWidget->setMaximumSize(QSize(800, 550));
         startpage0 = new MyWidget();
         startpage0->setObjectName("startpage0");
-        Start = new QPushButton(startpage0);
+        Start = new MyPushbutton(startpage0);
         Start->setObjectName("Start");
         Start->setGeometry(QRect(450, 270, 301, 201));
         stackedWidget->addWidget(startpage0);
         modepage1 = new QWidget();
         modepage1->setObjectName("modepage1");
-        Back = new QPushButton(modepage1);
+        Back = new MyPushbutton(modepage1);
         Back->setObjectName("Back");
         Back->setGeometry(QRect(20, 20, 101, 51));
         modeBox = new QGroupBox(modepage1);
@@ -93,7 +94,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        stackedWidget->setCurrentIndex(2);
+        stackedWidget->setCurrentIndex(1);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
