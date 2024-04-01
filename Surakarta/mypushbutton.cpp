@@ -39,6 +39,32 @@ void MyPushbutton::BounceUp()
 }
 
 
+void MyPushbutton::PressEfect(QString PressImage)
+{
+    this->PressImage=PressImage;
+    connect(this,&QPushButton::pressed,[=](){
+        QPixmap pix;
+        pix.load(PressImage);
+        this->setFixedSize(this->width,this->height);
+        this->setStyleSheet("QPushButton{Border:0px}");
+        this->setIcon(pix);
+        this->setIconSize(QSize(this->pixwidth,this->pixheight));
+    });
+}
+void MyPushbutton::ReleaseEfect(QString ReleaseImage)
+{
+    this->ReleaseImage=ReleaseImage;
+    connect(this,&QPushButton::released,[=](){
+        QPixmap pix;
+        pix.load(ReleaseImage);
+        this->setFixedSize(this->width,this->height);
+        this->setStyleSheet("QPushButton{Border:0px}");
+        this->setIcon(pix);
+        this->setIconSize(QSize(this->pixwidth,this->pixheight));
+    });
+}
+
+
 
 // void MyPushbutton::PressEfect(QString PressImage)
 // {

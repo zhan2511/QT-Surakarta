@@ -50,14 +50,14 @@ public:
         centralwidget->setMaximumSize(QSize(820, 570));
         stackedWidget = new QStackedWidget(centralwidget);
         stackedWidget->setObjectName("stackedWidget");
-        stackedWidget->setGeometry(QRect(60, 90, 800, 550));
+        stackedWidget->setGeometry(QRect(10, 10, 800, 550));
         stackedWidget->setMinimumSize(QSize(800, 550));
         stackedWidget->setMaximumSize(QSize(800, 550));
         startpage0 = new MyWidget();
         startpage0->setObjectName("startpage0");
         Start = new MyPushbutton(startpage0);
         Start->setObjectName("Start");
-        Start->setGeometry(QRect(450, 270, 301, 201));
+        Start->setGeometry(QRect(500, 200, 261, 251));
         stackedWidget->addWidget(startpage0);
         modepage1 = new QWidget();
         modepage1->setObjectName("modepage1");
@@ -66,7 +66,7 @@ public:
         Back->setGeometry(QRect(20, 20, 101, 51));
         modeBox = new QGroupBox(modepage1);
         modeBox->setObjectName("modeBox");
-        modeBox->setGeometry(QRect(200, 170, 461, 351));
+        modeBox->setGeometry(QRect(170, 170, 461, 351));
         vboxLayout = new QVBoxLayout(modeBox);
         vboxLayout->setSpacing(0);
         vboxLayout->setObjectName("vboxLayout");
@@ -94,7 +94,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        stackedWidget->setCurrentIndex(1);
+        stackedWidget->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -104,7 +104,7 @@ public:
     {
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "MainWindow", nullptr));
         Start->setText(QCoreApplication::translate("MainWindow", "START", nullptr));
-        Back->setText(QCoreApplication::translate("MainWindow", "Back", nullptr));
+        Back->setText(QString());
         modeBox->setTitle(QString());
         newgame->setText(QCoreApplication::translate("MainWindow", "NEW GAME", nullptr));
         spectator->setText(QCoreApplication::translate("MainWindow", "SPECTATOR", nullptr));

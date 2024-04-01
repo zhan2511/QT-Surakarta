@@ -37,19 +37,20 @@ MainWindow::MainWindow(QWidget *parent)
 
     //startpage0 插入背景
     QPixmap pix;
-    bool ret= pix.load(":/rsc/Background_Picture.png");
+    bool ret= pix.load(":/rsc/Background.png");
     if(!ret){qDebug()<<"pix wrong";}
     ui->startpage0->GetPaintInfo_pix(pix);
-    ui->startpage0->GetPaintInfo_scale(pix.width()*1.5,pix.height());
-    ui->startpage0->GetPaintInfo_size(800,550);
+    ui->startpage0->GetPaintInfo_scale(pix.width()*0.8,pix.height()*1.7);
+    ui->startpage0->GetPaintInfo_size(810,570);
     ui->startpage0->GetPaintInfo_pos(-10,-20);
     ui->startpage0->update();
 
     //Start 设置图标和弹跳效果
-    ui->Start->height=200;
-    ui->Start->width=300;
-    ui->Start->pixheight=190;
-    ui->Start->pixwidth=290;
+    ui->Start->move(500,200);
+    ui->Start->height=250;
+    ui->Start->width=250;
+    ui->Start->pixheight=250;
+    ui->Start->pixwidth=250;
     ui->Start->SetCustomisedIcon("");
     ui->Start->setFixedSize(ui->Start->width,ui->Start->height);
     connect(ui->Start,&QPushButton::clicked,this,[=](){
@@ -63,12 +64,12 @@ MainWindow::MainWindow(QWidget *parent)
     });
 
     //Back 设置图标和弹跳效果
-    ui->Back->move(20,20);
-    ui->Back->height=50;
-    ui->Back->width=100;
-    ui->Back->pixheight=90;
-    ui->Back->pixwidth=40;
-    ui->Back->SetCustomisedIcon("");
+    ui->Back->move(20,0);
+    ui->Back->height=80;
+    ui->Back->width=140;
+    ui->Back->pixheight=80;
+    ui->Back->pixwidth=140;
+    ui->Back->SetCustomisedIcon(":/rsc/Back.png");
     ui->Back->setFixedSize(ui->Back->width,ui->Back->height);
     connect(ui->Back,&QPushButton::clicked,this,[=](){
         ui->Back->BounceDown();
@@ -88,6 +89,7 @@ MainWindow::MainWindow(QWidget *parent)
     // ui->startpage0->GetPaintInfo_size(500,100);
     // ui->startpage0->GetPaintInfo_pos(200,0);
     // ui->startpage0->update();
+
 
 }
 

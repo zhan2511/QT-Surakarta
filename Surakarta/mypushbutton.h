@@ -20,6 +20,8 @@ public:
     void BounceDown();
     void BounceUp();
 
+    void PressEfect(QString PressImage);
+    void ReleaseEfect(QString ReleaseImage);
 
     // void PressEfect(QString PressImage);
 
@@ -27,6 +29,7 @@ signals:
 private:
     QString NormalImage;
     QString PressImage;
+    QString ReleaseImage;
 };
 
 #endif // MYPUSHBUTTON_H

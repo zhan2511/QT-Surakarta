@@ -3,5 +3,10 @@
         <file>rsc/Icon.jpg</file>
         <file>rsc/Background.png</file>
         <file>rsc/Surakarta.png</file>
+        <file>rsc/AIVSAI.png</file>
+        <file>rsc/AIVSGamer.png</file>
+        <file>rsc/Back.png</file>
+        <file>rsc/Gamers.png</file>
+        <file>rsc/LoadGame.png</file>
     </qresource>
 </RCC>
