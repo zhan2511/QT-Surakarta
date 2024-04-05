@@ -11,11 +11,10 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QGridLayout>
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QMainWindow>
-#include <QtWidgets/QPushButton>
 #include <QtWidgets/QStackedWidget>
-#include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 #include <mypushbutton.h>
 #include <mywidget.h>
@@ -32,17 +31,17 @@ public:
     QWidget *modepage1;
     MyPushbutton *Back;
     QGroupBox *modeBox;
-    QVBoxLayout *vboxLayout;
-    QPushButton *newgame;
-    QPushButton *spectator;
-    QPushButton *loadgame;
+    QGridLayout *gridLayout;
+    MyPushbutton *AIVSGamer;
+    MyPushbutton *AIVSAI;
+    MyPushbutton *loadgame;
     QWidget *page3;
 
     void setupUi(QMainWindow *MainWindow)
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName("MainWindow");
-        MainWindow->resize(840, 590);
+        MainWindow->resize(820, 570);
         MainWindow->setMinimumSize(QSize(9, 0));
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName("centralwidget");
@@ -66,25 +65,27 @@ public:
         Back->setGeometry(QRect(20, 20, 101, 51));
         modeBox = new QGroupBox(modepage1);
         modeBox->setObjectName("modeBox");
-        modeBox->setGeometry(QRect(170, 170, 461, 351));
-        vboxLayout = new QVBoxLayout(modeBox);
-        vboxLayout->setSpacing(0);
-        vboxLayout->setObjectName("vboxLayout");
-        vboxLayout->setContentsMargins(0, 0, 0, 0);
-        newgame = new QPushButton(modeBox);
-        newgame->setObjectName("newgame");
+        modeBox->setGeometry(QRect(175, 140, 450, 350));
+        modeBox->setMinimumSize(QSize(450, 350));
+        modeBox->setMaximumSize(QSize(450, 350));
+        modeBox->setStyleSheet(QString::fromUtf8("QGroupBox{Border:0px}"));
+        gridLayout = new QGridLayout(modeBox);
+        gridLayout->setObjectName("gridLayout");
+        gridLayout->setContentsMargins(0, 0, 0, 0);
+        AIVSGamer = new MyPushbutton(modeBox);
+        AIVSGamer->setObjectName("AIVSGamer");
 
-        vboxLayout->addWidget(newgame);
+        gridLayout->addWidget(AIVSGamer, 0, 0, 1, 1);
 
-        spectator = new QPushButton(modeBox);
-        spectator->setObjectName("spectator");
+        AIVSAI = new MyPushbutton(modeBox);
+        AIVSAI->setObjectName("AIVSAI");
 
-        vboxLayout->addWidget(spectator);
+        gridLayout->addWidget(AIVSAI, 1, 0, 1, 1);
 
-        loadgame = new QPushButton(modeBox);
+        loadgame = new MyPushbutton(modeBox);
         loadgame->setObjectName("loadgame");
 
-        vboxLayout->addWidget(loadgame);
+        gridLayout->addWidget(loadgame, 2, 0, 1, 1);
 
         stackedWidget->addWidget(modepage1);
         page3 = new QWidget();
@@ -94,7 +95,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        stackedWidget->setCurrentIndex(0);
+        stackedWidget->setCurrentIndex(1);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -106,9 +107,9 @@ public:
         Start->setText(QCoreApplication::translate("MainWindow", "START", nullptr));
         Back->setText(QString());
         modeBox->setTitle(QString());
-        newgame->setText(QCoreApplication::translate("MainWindow", "NEW GAME", nullptr));
-        spectator->setText(QCoreApplication::translate("MainWindow", "SPECTATOR", nullptr));
-        loadgame->setText(QCoreApplication::translate("MainWindow", "LOAD GAME", nullptr));
+        AIVSGamer->setText(QString());
+        AIVSAI->setText(QString());
+        loadgame->setText(QString());
     } // retranslateUi
 
 };

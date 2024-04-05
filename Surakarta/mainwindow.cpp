@@ -11,9 +11,11 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
+
     this->setFixedSize(820,570);
     this->setWindowIcon(QPixmap(":/rsc/Icon.jpg"));
     this->setWindowTitle("Surakarta_Home");
+
 
     ui->stackedWidget->setCurrentIndex(0);//设置首页
     // connect(ui->Start,&QPushButton::clicked,this,[=](){
@@ -21,16 +23,57 @@ MainWindow::MainWindow(QWidget *parent)
     // connect(ui->Back,&QPushButton::clicked,this,[=](){
     //     ui->stackedWidget->setCurrentIndex(0);
     // });//Back-切页0
-    connect(ui->loadgame,&QPushButton::clicked,this,[=](){
-        ui->stackedWidget->setCurrentIndex(2);
-    });//LOADGAME-切页2
+    // connect(ui->loadgame,&QPushButton::clicked,this,[=](){
+    //     ui->stackedWidget->setCurrentIndex(2);
+    // });//LOADGAME-切页2
 
-    //跳转到棋盘
+
+    //AIVSGammer 设置图标和弹跳效果 跳转到棋盘
     chessboard = new chess_window;
-    connect(ui->newgame,&QPushButton::clicked,this,[=](){
-        QTimer::singleShot(500,this,[=](){
+    ui->AIVSGamer->height=80;
+    ui->AIVSGamer->width=250;
+    ui->AIVSGamer->pixheight=80;
+    ui->AIVSGamer->pixwidth=250;
+    ui->AIVSGamer->SetCustomisedIcon(":/rsc/AIVSGamer.png");
+    ui->AIVSGamer->setFixedSize(ui->AIVSGamer->width,ui->AIVSGamer->height);
+    connect(ui->AIVSGamer,&QPushButton::clicked,this,[=](){
+        ui->AIVSGamer->BounceDown();
+        QTimer::singleShot(100,this,[=](){
+            ui->AIVSGamer->BounceUp();
+        });
+        QTimer::singleShot(100,this,[=](){
             this->hide();
             chessboard->show();
+        });
+    });
+
+
+    //AIVSAI 设置图标和弹跳效果
+    ui->AIVSAI->height=80;
+    ui->AIVSAI->width=250;
+    ui->AIVSAI->pixheight=80;
+    ui->AIVSAI->pixwidth=250;
+    ui->AIVSAI->SetCustomisedIcon(":/rsc/AIVSAI.png");
+    ui->AIVSAI->setFixedSize(ui->AIVSAI->width,ui->AIVSAI->height);
+    connect(ui->AIVSAI,&QPushButton::clicked,this,[=](){
+        ui->AIVSAI->BounceDown();
+        QTimer::singleShot(100,this,[=](){
+            ui->AIVSAI->BounceUp();
+        });
+    });
+
+
+    //LoadGame 设置图标和弹跳效果
+    ui->loadgame->height=80;
+    ui->loadgame->width=250;
+    ui->loadgame->pixheight=80;
+    ui->loadgame->pixwidth=250;
+    ui->loadgame->SetCustomisedIcon(":/rsc/LoadGame.png");
+    ui->loadgame->setFixedSize(ui->loadgame->width,ui->loadgame->height);
+    connect(ui->loadgame,&QPushButton::clicked,this,[=](){
+        ui->loadgame->BounceDown();
+        QTimer::singleShot(100,this,[=](){
+            ui->loadgame->BounceUp();
         });
     });
 
@@ -44,6 +87,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->startpage0->GetPaintInfo_size(810,570);
     ui->startpage0->GetPaintInfo_pos(-10,-20);
     ui->startpage0->update();
+
 
     //Start 设置图标和弹跳效果
     ui->Start->move(500,200);
@@ -63,6 +107,7 @@ MainWindow::MainWindow(QWidget *parent)
         });
     });
 
+
     //Back 设置图标和弹跳效果
     ui->Back->move(20,0);
     ui->Back->height=80;
@@ -80,6 +125,7 @@ MainWindow::MainWindow(QWidget *parent)
             ui->stackedWidget->setCurrentIndex(0);
         });
     });
+
 
     // QPixmap pix_Title;
     // bool ret02= pix_Title.load(":/rsc/Surakarta.png");
