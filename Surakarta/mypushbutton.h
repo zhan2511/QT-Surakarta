@@ -15,21 +15,24 @@ public:
     int height;
     int pixwidth=width;
     int pixheight=height;
+    QString PressImage="";
 
     //弹跳特效
     void BounceDown();
     void BounceUp();
 
-    void PressEfect(QString PressImage);
-    void ReleaseEfect(QString ReleaseImage);
-
-    // void PressEfect(QString PressImage);
 
 signals:
 private:
     QString NormalImage;
-    QString PressImage;
-    QString ReleaseImage;
+    // QString ReleaseImage;
+
+    // QWidget interface
+protected:
+
+    //按压效果
+    virtual void mousePressEvent(QMouseEvent *event) override;
+    virtual void mouseReleaseEvent(QMouseEvent *event) override;
 };
 
 #endif // MYPUSHBUTTON_H
