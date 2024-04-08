@@ -20,24 +20,24 @@ void chess_window::paintEvent(QPaintEvent *)
 
     //绘制棋盘格
     int rect_x, rect_y;
-    for (int i = 0; i < 6; ++i)
+    for (int i = 0; i < 5; ++i)
     {
-        for (int j = 0; j < 6;++j)
+        for (int j = 0; j < 5;++j)
         {
-            rect_x = 190+70*i;
-            rect_y = 190+70*j;
-            painter.drawRect(rect_x,rect_y,70,70);
+            rect_x = 200+80*i;
+            rect_y = 200+80*j;
+            painter.drawRect(rect_x,rect_y,80,80);
         }
     }
 
     //绘制圆弧线
-    painter.drawArc(120,120,140,140,0,16*270);
-    painter.drawArc(50,50,280,280,0,16*270);
-    painter.drawArc(540,120,140,140,-16*90,16*270);
-    painter.drawArc(470,50,280,280,-16*90,16*270);
-    painter.drawArc(120,540,140,140,16*90,16*270);
-    painter.drawArc(50,470,280,280,16*90,16*270);
-    painter.drawArc(540,540,140,140,-16*180,16*270);
-    painter.drawArc(470,470,280,280,-16*180,16*270);
+    painter.drawArc(120,120,160,160,0,16*270);
+    painter.drawArc(40,40,320,320,0,16*270);
+    painter.drawArc(520,120,160,160,-16*90,16*270);
+    painter.drawArc(440,40,320,320,-16*90,16*270);
+    painter.drawArc(120,520,160,160,16*90,16*270);
+    painter.drawArc(40,440,320,320,16*90,16*270);
+    painter.drawArc(520,520,160,160,-16*180,16*270);
+    painter.drawArc(440,440,320,320,-16*180,16*270);
 
 }
