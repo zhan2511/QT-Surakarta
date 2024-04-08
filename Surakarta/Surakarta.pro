@@ -14,12 +14,23 @@ SOURCES += \
     mainwindow.cpp \
     mypushbutton.cpp \
     mywidget.cpp \
+    surakarta/main1.cpp \
+    surakarta/surakarta_game.cpp \
+    surakarta/surakarta_reason.cpp \
+    surakarta/surakarta_rule_manager.cpp
 
 HEADERS += \
     chess_window.h \
     mainwindow.h \
     mypushbutton.h \
     mywidget.h \
+    surakarta/global_random_generator.h \
+    surakarta/surakarta_board.h \
+    surakarta/surakarta_common.h \
+    surakarta/surakarta_game.h \
+    surakarta/surakarta_piece.h \
+    surakarta/surakarta_reason.h \
+    surakarta/surakarta_rule_manager.h
 
 FORMS += \
     mainwindow.ui
@@ -31,3 +42,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 RESOURCES += \
     rsc.qrc
+
+DISTFILES += \
+    surakarta/CMakeLists.txt
