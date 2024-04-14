@@ -8,5 +8,7 @@
         <file>rsc/Back.png</file>
         <file>rsc/Gamers.png</file>
         <file>rsc/LoadGame.png</file>
+        <file>rsc/BlackPawn.png</file>
+        <file>rsc/WhitePawn.png</file>
     </qresource>
 </RCC>

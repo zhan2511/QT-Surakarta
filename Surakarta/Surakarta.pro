@@ -12,9 +12,12 @@ SOURCES += \
     chess_window.cpp \
     main.cpp \
     mainwindow.cpp \
+    mypieces.cpp \
     mypushbutton.cpp \
     mywidget.cpp \
     surakarta/main1.cpp \
+    surakarta/surakarta_agent/surakarta_agent_mine.cpp \
+    surakarta/surakarta_agent/surakarta_agent_random.cpp \
     surakarta/surakarta_game.cpp \
     surakarta/surakarta_reason.cpp \
     surakarta/surakarta_rule_manager.cpp
@@ -22,9 +25,13 @@ SOURCES += \
 HEADERS += \
     chess_window.h \
     mainwindow.h \
+    mypieces.h \
     mypushbutton.h \
     mywidget.h \
     surakarta/global_random_generator.h \
+    surakarta/surakarta_agent/surakarta_agent_base.h \
+    surakarta/surakarta_agent/surakarta_agent_mine.h \
+    surakarta/surakarta_agent/surakarta_agent_random.h \
     surakarta/surakarta_board.h \
     surakarta/surakarta_common.h \
     surakarta/surakarta_game.h \

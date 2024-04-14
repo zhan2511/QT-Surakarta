@@ -29,7 +29,6 @@ MainWindow::MainWindow(QWidget *parent)
 
 
     //AIVSGammer 设置图标和弹跳效果 跳转到棋盘
-    chessboard = new chess_window;
     ui->AIVSGamer->height=80;
     ui->AIVSGamer->width=250;
     ui->AIVSGamer->pixheight=80;
@@ -43,6 +42,9 @@ MainWindow::MainWindow(QWidget *parent)
         });
         QTimer::singleShot(100,this,[=](){
             this->hide();
+            chessboard = new chess_window;
+
+            chessboard->setAttribute(Qt::WA_DeleteOnClose);
             chessboard->show();
         });
     });
