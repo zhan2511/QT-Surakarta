@@ -12,6 +12,7 @@ SOURCES += \
     chess_window.cpp \
     main.cpp \
     mainwindow.cpp \
+    mygamethread.cpp \
     mypieces.cpp \
     mypushbutton.cpp \
     mywidget.cpp \
@@ -25,6 +26,7 @@ SOURCES += \
 HEADERS += \
     chess_window.h \
     mainwindow.h \
+    mygamethread.h \
     mypieces.h \
     mypushbutton.h \
     mywidget.h \

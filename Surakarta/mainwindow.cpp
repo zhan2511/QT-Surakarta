@@ -43,7 +43,8 @@ MainWindow::MainWindow(QWidget *parent)
         QTimer::singleShot(100,this,[=](){
             this->hide();
             chessboard = new chess_window;
-
+            // chessboard->Blackagent=std::shared_ptr<SurakartaAgentMine>();
+            // chessboard->Whiteagent=std::shared_ptr<SurakartaAgentRandom>();
             chessboard->setAttribute(Qt::WA_DeleteOnClose);
             chessboard->show();
         });

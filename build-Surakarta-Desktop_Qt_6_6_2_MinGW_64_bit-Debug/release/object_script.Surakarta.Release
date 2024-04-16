@@ -1,6 +1,7 @@
 release/chess_window.o
 release/main.o
 release/mainwindow.o
+release/mygamethread.o
 release/mypieces.o
 release/mypushbutton.o
 release/mywidget.o
@@ -13,6 +14,7 @@ release/surakarta_rule_manager.o
 release/qrc_rsc.o
 release/moc_chess_window.o
 release/moc_mainwindow.o
+release/moc_mygamethread.o
 release/moc_mypieces.o
 release/moc_mypushbutton.o
 release/moc_mywidget.o

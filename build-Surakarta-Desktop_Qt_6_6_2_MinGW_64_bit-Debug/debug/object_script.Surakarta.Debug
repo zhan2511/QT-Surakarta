@@ -1,6 +1,7 @@
 debug/chess_window.o
 debug/main.o
 debug/mainwindow.o
+debug/mygamethread.o
 debug/mypieces.o
 debug/mypushbutton.o
 debug/mywidget.o
@@ -13,6 +14,7 @@ debug/surakarta_rule_manager.o
 debug/qrc_rsc.o
 debug/moc_chess_window.o
 debug/moc_mainwindow.o
+debug/moc_mygamethread.o
 debug/moc_mypieces.o
 debug/moc_mypushbutton.o
 debug/moc_mywidget.o
