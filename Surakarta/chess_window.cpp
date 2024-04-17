@@ -203,11 +203,13 @@ void chess_window::moveend_(int pos)
         return;
     }
 
+    //设置最终位置
     topos=pos;
     status=0;
     qDebug()<<"moveend"<<"   "<<pos;
     Gamermove_.player=pieces[frompos]->color;
 
+    //玩家进行有效移动后再次呼出槽函数传递移动给游戏线程
     if(Gamermove_.player==SurakartaPlayer::BLACK){
         emit blackgamermove(gamecopy);
     }
@@ -238,23 +240,27 @@ void chess_window::winner_(SurakartaGame game){
 
 void chess_window::decideblackmove(SurakartaGame game)
 {
-    Blackagent=std::make_shared<SurakartaAgentMine>(game.GetBoard(), game.GetGameInfo(), game.GetRuleManager());
     qDebug()<<"black connect";
+
+    //判断是否建立了Agent，是则让Agent做出移动
     if(Blackagent!=NULL){
         Blackagent=std::make_shared<SurakartaAgentMine>(game.GetBoard(), game.GetGameInfo(), game.GetRuleManager());
         Blackmove=Blackagent->CalculateMove();
         qDebug()<<"Blackagent CalculateMove";
     }
+    //判断玩家是否进行了有效移动并提示
     else if(Gamermove_.player==SurakartaPlayer::UNKNOWN){
         emit gamerturn();
         gamecopy=game;
         // status=1;
         return;
     }
+    //存入玩家的有效移动
     else{
         Blackmove=SurakartaMove(frompos/6,frompos%6,topos/6,topos%6,SurakartaPlayer::BLACK);
         Gamermove_.player=SurakartaPlayer::UNKNOWN;
     }
+    //发送给游戏线程并唤醒
     emit blackmove(Blackmove);
     qDebug()<<"emit blackmove";
     Gamermove_.player=SurakartaPlayer::UNKNOWN;

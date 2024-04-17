@@ -24,9 +24,12 @@ void MyGameThread::run()
     while (!game.IsEnd()) {
         QThread::msleep(500);
         if (!turn) {
+
+            //提示主线程黑棋回合
             emit BlackTurn(game);
             qDebug()<<"blackturn";
 
+            //加锁并等待唤醒
             mutex.lock();
             qDebug()<<"waiting";
             condition.wait(&mutex);
@@ -37,9 +40,12 @@ void MyGameThread::run()
             turn = !turn;
         }
         else {
+
+            //提示主线程白棋回合
             emit WhiteTurn(game);
             qDebug()<<"whiteturn";
 
+            //加锁并等待唤醒
             mutex.lock();
             qDebug()<<"waiting";
             condition.wait(&mutex);
@@ -49,10 +55,14 @@ void MyGameThread::run()
             qDebug()<<"white move";
             turn = !turn;
         }
+
+        //提示主线程完成一次移动
         emit OneMove(game);
         QThread::msleep(1000);
     }
     qDebug()<<"game over";
+
+    //提示主线程完成一次游戏
     emit Finished(game);
 }
 

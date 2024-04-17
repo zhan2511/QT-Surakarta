@@ -24,21 +24,21 @@ public:
     SurakartaGame game;
 
 
-    void GamePre();
+    void GamePre();//game的准备
 
     virtual void run() override;
 
 public slots:
-    void blackmove_(SurakartaMove Blackmove);
-    void whitemove_(SurakartaMove Whitemove);
+    void blackmove_(SurakartaMove Blackmove);//接收主线程的黑棋移动
+    void whitemove_(SurakartaMove Whitemove);//接收主线程的白棋移动
 
 
 signals:
-    void GameReady(SurakartaGame game);
-    void BlackTurn(SurakartaGame game);
-    void WhiteTurn(SurakartaGame game);
-    void OneMove(SurakartaGame game);
-    void Finished(SurakartaGame game);
+    void GameReady(SurakartaGame game);//提示主线程准备完成
+    void BlackTurn(SurakartaGame game);//提示主线程黑棋回合
+    void WhiteTurn(SurakartaGame game);//提示主线程白棋回合
+    void OneMove(SurakartaGame game);//提示主线程完成一次移动
+    void Finished(SurakartaGame game);//提示主线程完成一次游戏
     // QThread interface
 protected:
 };

@@ -28,10 +28,10 @@ public:
 
     SurakartaGame gamecopy;//游戏线程的game的拷贝
 
-    SurakartaMove Blackmove;
-    SurakartaMove Whitemove;
+    SurakartaMove Blackmove;//
+    SurakartaMove Whitemove;//
 
-    SurakartaMove Gamermove_;//用来判断玩家是否进行了有效移动
+    SurakartaMove Gamermove_;//用来判断玩家是否进行了有效移动：Gamermove_.player==UNKNOWN被认为是未进行有效移动
 
     std::vector<MyPieces*> pieces;//棋子的容器
 
@@ -63,8 +63,8 @@ public slots:
     void moveend_(int pos);//存入最终位置topos
     void winner_(SurakartaGame game);//输出winner
     void setboard(SurakartaGame game);//更新棋盘
-    void decideblackmove(SurakartaGame game);//
-    void decidewhitemove(SurakartaGame game);
+    void decideblackmove(SurakartaGame game);//判断玩家orAgent进行移动，传递黑棋移动
+    void decidewhitemove(SurakartaGame game);//判断玩家orAgent进行移动，传递白棋移动
 
 
 };
