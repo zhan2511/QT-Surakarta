@@ -21,43 +21,49 @@ public:
 
     void paintEvent(QPaintEvent *);
 
-    std::shared_ptr<SurakartaAgentMine> Blackagent;
-    std::shared_ptr<SurakartaAgentRandom> Whiteagent;
-    SurakartaPlayer BlackGamer=SurakartaPlayer::NONE;
-    SurakartaPlayer WhiteGamer=SurakartaPlayer::NONE;
-    // SurakartaGame *game;
+    std::shared_ptr<SurakartaAgentMine> Blackagent=NULL;//设置ai
+    std::shared_ptr<SurakartaAgentRandom> Whiteagent=NULL;//设置ai
+    // SurakartaPlayer BlackGamer=SurakartaPlayer::NONE;
+    // SurakartaPlayer WhiteGamer=SurakartaPlayer::NONE;
+
+    SurakartaGame gamecopy;//游戏线程的game的拷贝
+
     SurakartaMove Blackmove;
     SurakartaMove Whitemove;
-    SurakartaMove Gamermove_;
 
-    std::vector<MyPieces*> pieces;
+    SurakartaMove Gamermove_;//用来判断玩家是否进行了有效移动
 
-    QWaitCondition cdt;
+    std::vector<MyPieces*> pieces;//棋子的容器
 
-    bool status=0;
-    int frompos;
-    int topos;
+    // QWaitCondition cdt;
 
-    QString BlackPawn=":/rsc/BlackPawn.png";
-    QString WhitePawn=":/rsc/WhitePawn.png";
-    QString Blank="";
+    bool status=0;//用来判断棋子的点击是选取还是移动     1 to select    0 to moveend
+    int frompos;//起始位置
+    int topos;//最终位置
+
+    QString BlackPawn=":/rsc/BlackPawn.png";//黑棋棋子
+    QString WhitePawn=":/rsc/WhitePawn.png";//白棋棋子
+    QString Blank="";//空棋子
 
 
 
 signals:
-    void select(int pos);
-    void moveend(int pos);
-    void blackmove(SurakartaMove Blackmove);
-    void whitemove(SurakartaMove Whitemove);
+    void select(int pos);//发送起始位置
+    void moveend(int pos);//发送最终位置
+    void blackmove(SurakartaMove Blackmove);//传给游戏线程的黑棋移动
+    void whitemove(SurakartaMove Whitemove);//传给游戏线程的白棋移动
+    void blackgamermove(SurakartaGame gamecopy);//玩家进行有效的黑棋移动
+    void whitegamermove(SurakartaGame gamecopy);//玩家进行有效的白棋移动
+    void gamerturn();//用来提示玩家回合（暂未使用）
 
 
 
 public slots:
-    void select_(int pos);
-    void moveend_(int pos);
-    void winner_(SurakartaGame game);
-    void setboard(SurakartaGame game);
-    void decideblackmove(SurakartaGame game);
+    void select_(int pos);//存入起始位置frompos
+    void moveend_(int pos);//存入最终位置topos
+    void winner_(SurakartaGame game);//输出winner
+    void setboard(SurakartaGame game);//更新棋盘
+    void decideblackmove(SurakartaGame game);//
     void decidewhitemove(SurakartaGame game);
 
 

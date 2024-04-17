@@ -52,6 +52,7 @@ void MyGameThread::run()
         emit OneMove(game);
         QThread::msleep(1000);
     }
+    qDebug()<<"game over";
     emit Finished(game);
 }
 

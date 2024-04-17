@@ -20,26 +20,28 @@ chess_window::chess_window(QWidget *parent): QMainWindow{parent}
     this->setWindowTitle("Surakarta Game");
     this->Gamermove_.player=SurakartaPlayer::UNKNOWN;
 
+    //创建游戏线程
     MyGameThread* gamethread=new MyGameThread(this);
 
+    //连接：游戏线程准备好了后主线程设置棋盘setboard
     connect(gamethread,SIGNAL(GameReady(SurakartaGame)),this,SLOT(setboard(SurakartaGame)));
 
+    //创建棋子piece并存入棋盘pieces
     for(int i=0;i<36;++i)
     {
         MyPieces *piece =new MyPieces(this);
         piece->setFixedSize(80,80);
         piece->move(160+i/6*80,160+i%6*80);
         pieces.push_back(piece);
+        //连接：棋子点击后利用status判断是选取（SIGNAL select）还是移动（SIGNAL moveend）
         connect(piece,&QPushButton::clicked,[=](){
             qDebug() <<"clicked   "<<i/6<<"   "<<i%6;
-            if(!status)
-            {
+            if(!status){
                 emit select(i);
                 // status=1;
                 // qDebug()<<"select";
             }
-            else
-            {
+            else{
                 emit moveend(i);
                 // status=0;
                 // qDebug()<<"moveend";
@@ -47,24 +49,40 @@ chess_window::chess_window(QWidget *parent): QMainWindow{parent}
         });
     }
 
+    //游戏线程：准备
     (*gamethread).GamePre();
 
-
-
+    //连接：
     connect(this,SIGNAL(select(int)),SLOT(select_(int)));
     connect(this,SIGNAL(moveend(int)),SLOT(moveend_(int)));
 
+    //连接：玩家有效移动后告诉主线程
+    connect(this,SIGNAL(blackgamermove(SurakartaGame)),SLOT(decideblackmove(SurakartaGame)));
+    connect(this,SIGNAL(whitegamermove(SurakartaGame)),SLOT(decidewhitemove(SurakartaGame)));
+
+    //to debug
     connect(gamethread,&MyGameThread::started,this,[=](){qDebug()<<"connect";});
     // connect(&gamethread,SIGNAL(gamethread.Finished()),this,SLOT(winner_()));
     // connect(&gamethread,&MyGameThread::Finished,this,&chess_window::winner_);
 
+    //连接：游戏线程中轮到黑（白）的回合，发信号告诉主线程
     connect(gamethread,SIGNAL(BlackTurn(SurakartaGame)),this,SLOT(decideblackmove(SurakartaGame)));
     connect(gamethread,SIGNAL(WhiteTurn(SurakartaGame)),this,SLOT(decidewhitemove(SurakartaGame)));
+
+    //连接：主线程把玩家orAgent的移动move传给游戏线程
     connect(this,SIGNAL(blackmove(SurakartaMove)),gamethread,SLOT(blackmove_(SurakartaMove)));
     connect(this,SIGNAL(whitemove(SurakartaMove)),gamethread,SLOT(whitemove_(SurakartaMove)));
+
+    //连接：一次移动后交给主线程更新棋盘
     connect(gamethread,SIGNAL(OneMove(SurakartaGame)),this,SLOT(setboard(SurakartaGame)));
+
+    //连接：游戏结束后输出winner
     connect(gamethread,SIGNAL(Finished(SurakartaGame)),this,SLOT(winner_(SurakartaGame)));
+
+    //连接：退出线程后删除线程
     connect(gamethread,&QThread::finished,gamethread,&QThread::deleteLater);
+
+    //开始线程
     qDebug()<<"ready to start";
     (*gamethread).start();
     // gamethread.run();
@@ -175,6 +193,8 @@ void chess_window::moveend_(int pos)
 {
     // QGraphicsEffect * ge;
     // pieces[frompos]->setGraphicsEffect(ge);
+
+    //如果点击相同棋子，则取消选中
     if(pos==frompos){
         frompos=0;
         status=0;
@@ -182,11 +202,18 @@ void chess_window::moveend_(int pos)
         Gamermove_.player=SurakartaPlayer::UNKNOWN;
         return;
     }
+
     topos=pos;
     status=0;
     qDebug()<<"moveend"<<"   "<<pos;
     Gamermove_.player=pieces[frompos]->color;
 
+    if(Gamermove_.player==SurakartaPlayer::BLACK){
+        emit blackgamermove(gamecopy);
+    }
+    else{
+        emit whitegamermove(gamecopy);
+    }
     // if(game.GetGameInfo()->current_player_==SurakartaPlayer::BLACK){
     //     Blackmove=SurakartaMove(frompos/6,frompos%6,topos/6,topos%6,game.game_info_->current_player_);
     // }
@@ -200,8 +227,11 @@ void chess_window::winner_(SurakartaGame game){
     if(winner==SurakartaPlayer::BLACK){
         qDebug()<<"Black win";
     }
-    else{
+    else if(winner==SurakartaPlayer::WHITE){
         qDebug()<<"White win";
+    }
+    else{
+        qDebug()<<"Tie";
     }
 }
 
@@ -211,13 +241,19 @@ void chess_window::decideblackmove(SurakartaGame game)
     Blackagent=std::make_shared<SurakartaAgentMine>(game.GetBoard(), game.GetGameInfo(), game.GetRuleManager());
     qDebug()<<"black connect";
     if(Blackagent!=NULL){
+        Blackagent=std::make_shared<SurakartaAgentMine>(game.GetBoard(), game.GetGameInfo(), game.GetRuleManager());
         Blackmove=Blackagent->CalculateMove();
         qDebug()<<"Blackagent CalculateMove";
     }
-    else {
-        while(Gamermove_.player==SurakartaPlayer::UNKNOWN){
-        }
+    else if(Gamermove_.player==SurakartaPlayer::UNKNOWN){
+        emit gamerturn();
+        gamecopy=game;
+        // status=1;
+        return;
+    }
+    else{
         Blackmove=SurakartaMove(frompos/6,frompos%6,topos/6,topos%6,SurakartaPlayer::BLACK);
+        Gamermove_.player=SurakartaPlayer::UNKNOWN;
     }
     emit blackmove(Blackmove);
     qDebug()<<"emit blackmove";
@@ -227,19 +263,24 @@ void chess_window::decideblackmove(SurakartaGame game)
 
 void chess_window::decidewhitemove(SurakartaGame game)
 {
-    Whiteagent=std::make_shared<SurakartaAgentRandom>(game.GetBoard(), game.GetGameInfo(), game.GetRuleManager());
+
     qDebug()<<"white connect";
     if(Whiteagent!=NULL){
+        Whiteagent=std::make_shared<SurakartaAgentRandom>(game.GetBoard(), game.GetGameInfo(), game.GetRuleManager());
         Whitemove=Whiteagent->CalculateMove();
         qDebug()<<"Whiteagent CalculateMove";
     }
-    else {
-        while(Gamermove_.player==SurakartaPlayer::UNKNOWN){
-        }
+    else if(Gamermove_.player==SurakartaPlayer::UNKNOWN){
+        emit gamerturn();
+        gamecopy=game;
+        return;
+    }
+    else{
         Whitemove=SurakartaMove(frompos/6,frompos%6,topos/6,topos%6,SurakartaPlayer::WHITE);
+        Gamermove_.player=SurakartaPlayer::UNKNOWN;
     }
     emit whitemove(Whitemove);
-    qDebug()<<"emit blackmove";
+    qDebug()<<"emit whitemove";
     Gamermove_.player=SurakartaPlayer::UNKNOWN;
     condition.wakeAll();
 }
