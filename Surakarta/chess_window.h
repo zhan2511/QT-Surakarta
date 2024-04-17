@@ -21,8 +21,8 @@ public:
 
     void paintEvent(QPaintEvent *);
 
-    std::shared_ptr<SurakartaAgentMine> Blackagent=NULL;//设置ai
-    std::shared_ptr<SurakartaAgentRandom> Whiteagent=NULL;//设置ai
+    std::shared_ptr<SurakartaAgentBase> Blackagent=NULL;//设置ai
+    std::shared_ptr<SurakartaAgentBase> Whiteagent=NULL;//设置ai
     // SurakartaPlayer BlackGamer=SurakartaPlayer::NONE;
     // SurakartaPlayer WhiteGamer=SurakartaPlayer::NONE;
 

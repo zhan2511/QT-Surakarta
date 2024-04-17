@@ -151,7 +151,7 @@ void chess_window::setboard(SurakartaGame game)
             pieces[i]->setIconSize(QSize(80,80));
             // QPainter painter(pieces[i]);
             // painter.setRenderHint(QPainter::Antialiasing);
-            qDebug()<<i/6<<" "<<i%6<<" B";
+            // qDebug()<<i/6<<" "<<i%6<<" B";
         }
         else if((*game.GetBoard())[i/6][i%6]->GetColor()==PieceColor::WHITE)
         {
@@ -161,7 +161,7 @@ void chess_window::setboard(SurakartaGame game)
             // pix=pix.scaled(80,80);
             pieces[i]->setIcon(pix);
             pieces[i]->setIconSize(QSize(80,80));
-            qDebug()<<i/6<<" "<<i%6<<" W";
+            // qDebug()<<i/6<<" "<<i%6<<" W";
         }
         else if((*game.GetBoard())[i/6][i%6]->GetColor()==PieceColor::NONE)
         {
@@ -171,15 +171,24 @@ void chess_window::setboard(SurakartaGame game)
             // pix=pix.scaled(80,80);
             pieces[i]->setIcon(pix);
             pieces[i]->setIconSize(QSize(80,80));
-            qDebug()<<i/6<<" "<<i%6<<" N";
+            // qDebug()<<i/6<<" "<<i%6<<" N";
         }
     }
 }
 
 void chess_window::select_(int pos)
 {
+    if(pieces[pos]->color!=gamecopy.GetGameInfo()->current_player_)
+        return;
+
     frompos=pos;
     status=1;
+
+    //设置透明度
+    QGraphicsOpacityEffect *opacityEffect = new QGraphicsOpacityEffect(pieces[pos]);
+    opacityEffect->setOpacity(0.7);
+    pieces[pos]->setGraphicsEffect(opacityEffect);
+
     // QPixmap pix;
     // pix.load("");
     // pieces[pos]->setIcon(pix);
@@ -199,9 +208,20 @@ void chess_window::moveend_(int pos)
         frompos=0;
         status=0;
         qDebug()<<"cancel";
+
+        //设置透明度
+        QGraphicsOpacityEffect *opacityEffect = new QGraphicsOpacityEffect(pieces[pos]);
+        opacityEffect->setOpacity(1);
+        pieces[pos]->setGraphicsEffect(opacityEffect);
+
         Gamermove_.player=SurakartaPlayer::UNKNOWN;
         return;
     }
+
+    //设置透明度
+    QGraphicsOpacityEffect *opacityEffect = new QGraphicsOpacityEffect(pieces[frompos]);
+    opacityEffect->setOpacity(1);
+    pieces[frompos]->setGraphicsEffect(opacityEffect);
 
     //设置最终位置
     topos=pos;
@@ -209,7 +229,7 @@ void chess_window::moveend_(int pos)
     qDebug()<<"moveend"<<"   "<<pos;
     Gamermove_.player=pieces[frompos]->color;
 
-    //玩家进行有效移动后再次呼出槽函数传递移动给游戏线程
+    //玩家进行有效移动后再次呼出槽函数传递有效移动给游戏线程
     if(Gamermove_.player==SurakartaPlayer::BLACK){
         emit blackgamermove(gamecopy);
     }
@@ -255,8 +275,12 @@ void chess_window::decideblackmove(SurakartaGame game)
         // status=1;
         return;
     }
+    //玩家误用棋子
+    else if(Gamermove_.player==SurakartaPlayer::WHITE){
+        return;
+    }
     //存入玩家的有效移动
-    else{
+    else/* if(Gamermove_.player==SurakartaPlayer::BLACK)*/{
         Blackmove=SurakartaMove(frompos/6,frompos%6,topos/6,topos%6,SurakartaPlayer::BLACK);
         Gamermove_.player=SurakartaPlayer::UNKNOWN;
     }
@@ -279,6 +303,9 @@ void chess_window::decidewhitemove(SurakartaGame game)
     else if(Gamermove_.player==SurakartaPlayer::UNKNOWN){
         emit gamerturn();
         gamecopy=game;
+        return;
+    }
+    else if(Gamermove_.player==SurakartaPlayer::BLACK){
         return;
     }
     else{

@@ -22,7 +22,7 @@ void MyGameThread::run()
 { 
     bool turn ;/*= rand() % 2 == 0;*/
     while (!game.IsEnd()) {
-        QThread::msleep(500);
+        // QThread::msleep(500);
         if (!turn) {
 
             //提示主线程黑棋回合
@@ -58,7 +58,7 @@ void MyGameThread::run()
 
         //提示主线程完成一次移动
         emit OneMove(game);
-        QThread::msleep(1000);
+        QThread::msleep(500);
     }
     qDebug()<<"game over";
 

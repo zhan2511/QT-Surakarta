@@ -42,10 +42,15 @@ MainWindow::MainWindow(QWidget *parent)
         });
         QTimer::singleShot(100,this,[=](){
             this->hide();
-            chessboard = new chess_window;
-            // chessboard->Blackagent=std::shared_ptr<SurakartaAgentMine>();
-            // chessboard->Whiteagent=std::shared_ptr<SurakartaAgentRandom>();
+            chessboard = new chess_window(this);
             chessboard->setAttribute(Qt::WA_DeleteOnClose);
+            // SurakartaGame *gamepre;
+            // chessboard->Blackagent=std::make_shared<SurakartaAgentBase>(gamepre->GetBoard(), gamepre->GetGameInfo(), gamepre->GetRuleManager());
+            // chessboard->Whiteagent=std::make_shared<SurakartaAgentBase>(gamepre->GetBoard(), gamepre->GetGameInfo(), gamepre->GetRuleManager());
+            // delete[] gamepre;
+            // if(chessboard->Blackagent==NULL){
+            //     qDebug()<<"set agent";
+            // }
             chessboard->show();
         });
     });
