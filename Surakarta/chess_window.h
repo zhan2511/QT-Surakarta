@@ -3,6 +3,9 @@
 
 #include <QMainWindow>
 #include "mypieces.h"
+#include <QTimer>
+#include <QTime>
+#include <QLabel>
 #include "surakarta/surakarta_game.h"
 #include "surakarta/surakarta_common.h"
 #include "surakarta/surakarta_agent/surakarta_agent_mine.h"
@@ -45,6 +48,25 @@ public:
     QString WhitePawn=":/rsc/WhitePawn.png";//白棋棋子
     QString Blank="";//空棋子
 
+    QTime BTime;
+    QTime WTime;
+
+    QLabel *Time;
+    QLabel *BlackTime;
+    QLabel *WhiteTime;
+    QLabel *Current_Player;
+    QLabel *Round;
+    QLabel *Winner;
+
+    QFont ft;
+
+    QString timestr;
+    int timeS=0;
+    int roundtimelimit=30;
+    QString BTimestr;
+    QString WTimestr;
+    int gamehour=0;
+    int gamemin=40;
 
 
 signals:
@@ -54,7 +76,9 @@ signals:
     void whitemove(SurakartaMove Whitemove);//传给游戏线程的白棋移动
     void blackgamermove(SurakartaGame gamecopy);//玩家进行有效的黑棋移动
     void whitegamermove(SurakartaGame gamecopy);//玩家进行有效的白棋移动
-    void gamerturn();//用来提示玩家回合（暂未使用）
+    void blackgamerturn();//用来提示玩家移动黑棋(暂未使用）
+    void whitegamerturn();//用来提示玩家移动白棋(暂未使用）
+    void timeover(SurakartaGame gamecopy);
 
 
 

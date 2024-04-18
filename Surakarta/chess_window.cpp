@@ -3,6 +3,7 @@
 #include <QtWidgets>
 #include "mypieces.h"
 #include <QDebug>
+#include <QTimer>
 #include "mygamethread.h"
 #include "surakarta/surakarta_game.h"
 #include "surakarta/surakarta_common.h"
@@ -20,11 +21,103 @@ chess_window::chess_window(QWidget *parent): QMainWindow{parent}
     this->setWindowTitle("Surakarta Game");
     this->Gamermove_.player=SurakartaPlayer::UNKNOWN;
 
+
     //创建游戏线程
     MyGameThread* gamethread=new MyGameThread(this);
 
     //连接：游戏线程准备好了后主线程设置棋盘setboard
     connect(gamethread,SIGNAL(GameReady(SurakartaGame)),this,SLOT(setboard(SurakartaGame)));
+
+    //游戏时间
+    BTime=QTime(gamehour,gamemin);
+    WTime=QTime(gamehour,gamemin);
+
+    //计时器
+    QTimer *timer=new QTimer(this);
+    connect(gamethread,&MyGameThread::BlackTurn,this,[=](){
+        qDebug()<<"timer start";
+        timer->start(1000);
+    });
+    connect(this,&chess_window::blackgamermove,this,[=](){
+        qDebug()<<"timer stop";
+        timer->stop();
+        timeS=0;
+        Time->setText("RoundTime   30");
+    });
+    connect(gamethread,&MyGameThread::WhiteTurn,this,[=](){
+        qDebug()<<"timer start";
+        timer->start(1000);
+    });
+    connect(this,&chess_window::whitegamermove,this,[=](){
+        qDebug()<<"timer stop";
+        timer->stop();
+        timeS=0;
+        Time->setText("RoundTime   30");
+    });
+    connect(gamethread,&MyGameThread::Finished,this,[=](){timer->stop();});
+    connect(timer,&QTimer::timeout,[=](){
+        timestr="RoundTime   "+QString::number(roundtimelimit-(++timeS));
+        // qDebug()<<timeS;
+        Time->setText(timestr);
+        if(gamecopy.GetGameInfo()->current_player_==SurakartaPlayer::BLACK){
+            BTime=BTime.addMSecs(-1000);
+            BlackTime->setText("BlackTime   "+BTime.toString("h:mm:ss"));
+        }
+        else if(gamecopy.GetGameInfo()->current_player_==SurakartaPlayer::WHITE){
+            WTime=WTime.addMSecs(-1000);
+            WhiteTime->setText("WhiteTime   "+WTime.toString("h:mm:ss"));
+        }
+        if(timeS==roundtimelimit-1||(QTime(0,0,0).secsTo(BTime)==0)||(QTime(0,0,0).secsTo(WTime)==0)){
+            timer->stop();
+            qDebug()<<"Time Out";
+            emit timeover(gamecopy);
+        }
+    });
+
+
+    //设置字体大小
+    ft.setPointSize(18);
+
+    // 显示游戏信息的标签
+    Round=new QLabel(this);
+    Round->setFixedSize(280,100);
+    Round->move(850,100);
+    Round->setFont(ft);
+    Round->setText("Round   0");
+
+    Current_Player=new QLabel(this);
+    Current_Player->setFixedSize(280,100);
+    Current_Player->move(850,200);
+    Current_Player->setFont(ft);
+    Current_Player->setText("Current Player : ");
+
+    Time=new QLabel(this);
+    Time->setFixedSize(280,100);
+    Time->move(850,300);
+    Time->setFont(ft);
+    Time->setText("RoundTime   30");
+
+    BlackTime=new QLabel(this);
+    BlackTime->setFixedSize(280,100);
+    BlackTime->move(850,400);
+    BlackTime->setFont(ft);
+    BlackTime->setText("BlackTime   "+BTime.toString("h:mm:ss"));
+
+    WhiteTime=new QLabel(this);
+    WhiteTime->setFixedSize(280,100);
+    WhiteTime->move(850,500);
+    WhiteTime->setFont(ft);
+    WhiteTime->setText("WhiteTime   "+WTime.toString("h:mm:ss"));
+
+    Winner=new QLabel(this);
+    Winner->setFixedSize(280,150);
+    Winner->move(850,600);
+    Winner->setFont(ft);
+
+
+
+
+
 
     //创建棋子piece并存入棋盘pieces
     for(int i=0;i<36;++i)
@@ -78,6 +171,10 @@ chess_window::chess_window(QWidget *parent): QMainWindow{parent}
 
     //连接：游戏结束后输出winner
     connect(gamethread,SIGNAL(Finished(SurakartaGame)),this,SLOT(winner_(SurakartaGame)));
+    connect(this,SIGNAL(timeover(SurakartaGame)),SLOT(winner_(SurakartaGame)));
+    connect(this,&chess_window::timeover,[=](){
+        gamethread->exit();
+    });
 
     //连接：退出线程后删除线程
     connect(gamethread,&QThread::finished,gamethread,&QThread::deleteLater);
@@ -137,6 +234,13 @@ void chess_window::paintEvent(QPaintEvent *)
 void chess_window::setboard(SurakartaGame game)
 {
     QPixmap pix;
+
+    if(game.GetGameInfo()->current_player_==SurakartaPlayer::BLACK)
+        Current_Player->setText("Current Player : BLACK");
+    else
+        Current_Player->setText("Current Player : WHITE");
+
+    Round->setText("Round   "+QString::number(game.GetGameInfo()->num_round_));
 
     for(int i=0;i<36;i++)
     {
@@ -245,6 +349,12 @@ void chess_window::moveend_(int pos)
 };
 
 void chess_window::winner_(SurakartaGame game){
+
+    if(game.GetGameInfo()->winner_==SurakartaPlayer::BLACK)
+        Winner->setText("WINNER : BLACK");
+    else if(game.GetGameInfo()->winner_==SurakartaPlayer::WHITE)
+        Winner->setText("WINNER : WHITE");
+
     auto winner=game.GetGameInfo()->winner_;
     if(winner==SurakartaPlayer::BLACK){
         qDebug()<<"Black win";
@@ -260,18 +370,19 @@ void chess_window::winner_(SurakartaGame game){
 
 void chess_window::decideblackmove(SurakartaGame game)
 {
+    gamecopy=game;
     qDebug()<<"black connect";
 
     //判断是否建立了Agent，是则让Agent做出移动
+    Blackagent=std::make_shared<SurakartaAgentMine>(game.GetBoard(), game.GetGameInfo(), game.GetRuleManager());
     if(Blackagent!=NULL){
-        Blackagent=std::make_shared<SurakartaAgentMine>(game.GetBoard(), game.GetGameInfo(), game.GetRuleManager());
         Blackmove=Blackagent->CalculateMove();
         qDebug()<<"Blackagent CalculateMove";
     }
     //判断玩家是否进行了有效移动并提示
     else if(Gamermove_.player==SurakartaPlayer::UNKNOWN){
-        emit gamerturn();
-        gamecopy=game;
+        emit blackgamerturn();
+
         // status=1;
         return;
     }
@@ -293,7 +404,7 @@ void chess_window::decideblackmove(SurakartaGame game)
 
 void chess_window::decidewhitemove(SurakartaGame game)
 {
-
+    gamecopy=game;
     qDebug()<<"white connect";
     if(Whiteagent!=NULL){
         Whiteagent=std::make_shared<SurakartaAgentRandom>(game.GetBoard(), game.GetGameInfo(), game.GetRuleManager());
@@ -301,8 +412,7 @@ void chess_window::decidewhitemove(SurakartaGame game)
         qDebug()<<"Whiteagent CalculateMove";
     }
     else if(Gamermove_.player==SurakartaPlayer::UNKNOWN){
-        emit gamerturn();
-        gamecopy=game;
+        emit whitegamerturn();
         return;
     }
     else if(Gamermove_.player==SurakartaPlayer::BLACK){
