@@ -2,6 +2,8 @@
 #include <QDebug>
 #include <QWaitCondition>
 #include <QMutex>
+#include "surakarta/surakarta_game.h"
+
 
 
 // MyGameThread::MyGameThread(QObject *parent)
@@ -19,14 +21,14 @@ MyGameThread::MyGameThread(QObject *parent)
 
 
 void MyGameThread::run()
-{ 
-    bool turn ;/*= rand() % 2 == 0;*/
-    while (!game.IsEnd()) {
+{
+    bool turn/* = rand() % 2*/;
+    while (!game.IsEnd()&&!m_stop) {
         // QThread::msleep(500);
         if (!turn) {
 
             //提示主线程黑棋回合
-            emit BlackTurn(game);
+             emit BlackTurn(game);
             qDebug()<<"blackturn";
 
             //加锁并等待唤醒
@@ -64,6 +66,8 @@ void MyGameThread::run()
 
     //提示主线程完成一次游戏
     emit Finished(game);
+
+    // exec();
 }
 
 

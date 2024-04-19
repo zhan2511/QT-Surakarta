@@ -20,6 +20,9 @@ public:
 
     chess_window * chessboard = nullptr;
 
+    int gamehour=0;//设置移动总时间 h
+    int gamemin=40;//设置移动总时间 min
+
 private:
     Ui::MainWindow *ui;
 

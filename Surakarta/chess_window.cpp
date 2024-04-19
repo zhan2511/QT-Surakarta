@@ -5,6 +5,7 @@
 #include <QDebug>
 #include <QTimer>
 #include "mygamethread.h"
+#include "mypausedialog.h"
 #include "surakarta/surakarta_game.h"
 #include "surakarta/surakarta_common.h"
 // #include "surakarta/surakarta_agent/surakarta_agent_mine.h"
@@ -14,7 +15,7 @@
 // SurakartaGame game;
 
 
-chess_window::chess_window(QWidget *parent): QMainWindow{parent}
+chess_window::chess_window(int mode,QWidget *parent): QMainWindow{parent},mode {mode}
 {
     this->setFixedSize(1200,800);
     this->setWindowIcon(QPixmap(":/rsc/Icon.jpg"));
@@ -31,6 +32,15 @@ chess_window::chess_window(QWidget *parent): QMainWindow{parent}
     //游戏时间
     BTime=QTime(gamehour,gamemin);
     WTime=QTime(gamehour,gamemin);
+
+    //设置模式（agent）
+    if(mode==1){
+        Blackagent=std::make_shared<SurakartaAgentMine>(gamecopy.GetBoard(), gamecopy.GetGameInfo(), gamecopy.GetRuleManager());
+    }
+    else if(mode==2){
+        Blackagent=std::make_shared<SurakartaAgentMine>(gamecopy.GetBoard(), gamecopy.GetGameInfo(), gamecopy.GetRuleManager());
+        Whiteagent=std::make_shared<SurakartaAgentMine>(gamecopy.GetBoard(), gamecopy.GetGameInfo(), gamecopy.GetRuleManager());
+    }
 
     //计时器
     QTimer *timer=new QTimer(this);
@@ -56,9 +66,8 @@ chess_window::chess_window(QWidget *parent): QMainWindow{parent}
     });
     connect(gamethread,&MyGameThread::Finished,this,[=](){timer->stop();});
     connect(timer,&QTimer::timeout,[=](){
-        timestr="RoundTime   "+QString::number(roundtimelimit-(++timeS));
         // qDebug()<<timeS;
-        Time->setText(timestr);
+        Time->setText("RoundTime   "+QString::number(roundtimelimit-(++timeS)));
         if(gamecopy.GetGameInfo()->current_player_==SurakartaPlayer::BLACK){
             BTime=BTime.addMSecs(-1000);
             BlackTime->setText("BlackTime   "+BTime.toString("h:mm:ss"));
@@ -67,11 +76,77 @@ chess_window::chess_window(QWidget *parent): QMainWindow{parent}
             WTime=WTime.addMSecs(-1000);
             WhiteTime->setText("WhiteTime   "+WTime.toString("h:mm:ss"));
         }
-        if(timeS==roundtimelimit-1||(QTime(0,0,0).secsTo(BTime)==0)||(QTime(0,0,0).secsTo(WTime)==0)){
+        if(timeS==roundtimelimit||(QTime(0,0,0).secsTo(BTime)==0)||(QTime(0,0,0).secsTo(WTime)==0)){
             timer->stop();
             qDebug()<<"Time Out";
-            emit timeover(gamecopy);
+            emit timeover(gamecopy.GetGameInfo()->current_player_);
         }
+    });
+
+    //暂停键与暂停窗口（模态对话框）
+    PauseDialog=new MyPauseDialog(this);
+    PauseDialog->setAttribute(Qt::WA_DeleteOnClose);
+    PauseDialog->setModal(1);
+    QPushButton *Pause=new QPushButton(this);
+    Pause->move(1100,60);
+    Pause->setFixedSize(QSize(60,60));
+    Pause->setStyleSheet("QPushButton{Border:0px}");
+    pix.load(":/rsc/Pause.png");
+    pix = pix.scaled(Pause->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation) ;
+    Pause->setIcon(pix);
+    Pause->setIconSize(QSize(60,60));
+    connect(Pause,&QPushButton::clicked,this,[=](){
+        timer->stop();
+        PauseDialog->show();
+    });
+
+    //暂停窗口的按键
+    connect(PauseDialog->Back,&QPushButton::clicked,this,[=](){
+        timer->start(1000);
+        PauseDialog->hide();
+    });
+    connect(PauseDialog->Quit,&QPushButton::clicked,this,[=](){
+        gamethread->quit();
+        gamethread->wait(25);
+        gamethread->terminate();
+
+        // if(gamethread->isRunning()){
+        //     disconnect(gamethread,SIGNAL(OneMove(SurakartaGame)),this,SLOT(setboard(SurakartaGame)));
+        //     disconnect(gamethread,SIGNAL(Finished(SurakartaGame)),this,SLOT(winner_(SurakartaGame)));
+        //     gamethread->m_stop=1;
+        //     condition.wakeAll();
+        //     gamethread->quit();
+        //     gamethread->wait(25);
+        //     qDebug()<<"game exit";
+        // }
+        emit mainshow();
+        this->close();
+    });
+    connect(PauseDialog->Restart,&QPushButton::clicked,this,[=/*,&gamethread*/](){
+        PauseDialog->hide();
+
+        // gamethread->quit();
+        // gamethread->wait(25);
+        // qDebug()<<"game exit";
+        // gamethread->terminate();
+
+        // if(gamethread->isRunning()){
+        // disconnect(gamethread,SIGNAL(OneMove(SurakartaGame)),this,SLOT(setboard(SurakartaGame)));
+        // disconnect(gamethread,SIGNAL(Finished(SurakartaGame)),this,SLOT(winner_(SurakartaGame)));
+        // gamethread->m_stop=1;
+        // condition.wakeAll();
+        // gamethread->quit();
+        // qDebug()<<"game exit";
+        // gamethread->wait(25);
+        // }
+        // QTimer::singleShot(100,this,[=/*,&gamethread*/](){
+        //     // gamethread=new MyGameThread(this);
+        //     connect(gamethread,SIGNAL(OneMove(SurakartaGame)),this,SLOT(setboard(SurakartaGame)));
+        //     connect(gamethread,SIGNAL(Finished(SurakartaGame)),this,SLOT(winner_(SurakartaGame)));
+        //     gamethread->m_stop=0;
+        //     gamethread->GamePre();
+        //     gamethread->start();
+        // });
     });
 
 
@@ -171,9 +246,23 @@ chess_window::chess_window(QWidget *parent): QMainWindow{parent}
 
     //连接：游戏结束后输出winner
     connect(gamethread,SIGNAL(Finished(SurakartaGame)),this,SLOT(winner_(SurakartaGame)));
-    connect(this,SIGNAL(timeover(SurakartaGame)),SLOT(winner_(SurakartaGame)));
+    connect(this,SIGNAL(timeover(SurakartaPlayer)),SLOT(winner_(SurakartaPlayer)));
+
+    //连接：超时终止游戏线程
     connect(this,&chess_window::timeover,[=](){
-        gamethread->exit();
+        gamethread->quit();
+        // gamethread->exit(0);
+        // auto ret=gamethread->isRunning();
+        // qDebug()<<ret;
+        gamethread->wait(25);
+        gamethread->terminate();
+        // disconnect(gamethread,SIGNAL(OneMove(SurakartaGame)),this,SLOT(setboard(SurakartaGame)));
+        // disconnect(gamethread,SIGNAL(Finished(SurakartaGame)),this,SLOT(winner_(SurakartaGame)));
+        // gamethread->m_stop=1;
+        // condition.wakeAll();
+        // gamethread->quit();
+        // gamethread->wait(25);
+        qDebug()<<"game exit";
     });
 
     //连接：退出线程后删除线程
@@ -233,8 +322,6 @@ void chess_window::paintEvent(QPaintEvent *)
 
 void chess_window::setboard(SurakartaGame game)
 {
-    QPixmap pix;
-
     if(game.GetGameInfo()->current_player_==SurakartaPlayer::BLACK)
         Current_Player->setText("Current Player : BLACK");
     else
@@ -244,6 +331,7 @@ void chess_window::setboard(SurakartaGame game)
 
     for(int i=0;i<36;i++)
     {
+        pieces[i]->moveable=1;
         if((*game.GetBoard())[i/6][i%6]->GetColor()==PieceColor::BLACK)
         {
             pieces[i]->color=PieceColor::BLACK;
@@ -348,12 +436,19 @@ void chess_window::moveend_(int pos)
     // }
 };
 
+
 void chess_window::winner_(SurakartaGame game){
+
+    for(int i=0;i<36;i++){
+        pieces[i]->moveable=0;
+    }
 
     if(game.GetGameInfo()->winner_==SurakartaPlayer::BLACK)
         Winner->setText("WINNER : BLACK");
     else if(game.GetGameInfo()->winner_==SurakartaPlayer::WHITE)
         Winner->setText("WINNER : WHITE");
+    else if(game.GetGameInfo()->winner_==SurakartaPlayer::NONE)
+        Winner->setText("TIE");
 
     auto winner=game.GetGameInfo()->winner_;
     if(winner==SurakartaPlayer::BLACK){
@@ -367,6 +462,22 @@ void chess_window::winner_(SurakartaGame game){
     }
 }
 
+void chess_window::winner_(SurakartaPlayer time_out){
+
+    for(int i=0;i<36;i++){
+        pieces[i]->moveable=0;
+    }
+
+    if(time_out==SurakartaPlayer::WHITE){
+        qDebug()<<"Black win";
+        Winner->setText("WINNER : BLACK");
+    }
+    else if(time_out==SurakartaPlayer::BLACK){
+        qDebug()<<"White win";
+        Winner->setText("WINNER : WHITE");
+    }
+}
+
 
 void chess_window::decideblackmove(SurakartaGame game)
 {
@@ -374,10 +485,12 @@ void chess_window::decideblackmove(SurakartaGame game)
     qDebug()<<"black connect";
 
     //判断是否建立了Agent，是则让Agent做出移动
-    Blackagent=std::make_shared<SurakartaAgentMine>(game.GetBoard(), game.GetGameInfo(), game.GetRuleManager());
     if(Blackagent!=NULL){
-        Blackmove=Blackagent->CalculateMove();
-        qDebug()<<"Blackagent CalculateMove";
+        // QTimer::singleShot(1000,this,[=](){
+        Blackagent=std::make_shared<SurakartaAgentMine>(game.GetBoard(), game.GetGameInfo(), game.GetRuleManager());
+            Blackmove=Blackagent->CalculateMove();
+            qDebug()<<"Blackagent CalculateMove";
+        // });
     }
     //判断玩家是否进行了有效移动并提示
     else if(Gamermove_.player==SurakartaPlayer::UNKNOWN){
@@ -407,9 +520,11 @@ void chess_window::decidewhitemove(SurakartaGame game)
     gamecopy=game;
     qDebug()<<"white connect";
     if(Whiteagent!=NULL){
-        Whiteagent=std::make_shared<SurakartaAgentRandom>(game.GetBoard(), game.GetGameInfo(), game.GetRuleManager());
-        Whitemove=Whiteagent->CalculateMove();
-        qDebug()<<"Whiteagent CalculateMove";
+        // QTimer::singleShot(1000,this,[=](){
+        Whiteagent=std::make_shared<SurakartaAgentMine>(game.GetBoard(), game.GetGameInfo(), game.GetRuleManager());
+            Whitemove=Whiteagent->CalculateMove();
+            qDebug()<<"Whiteagent CalculateMove";
+        // });
     }
     else if(Gamermove_.player==SurakartaPlayer::UNKNOWN){
         emit whitegamerturn();

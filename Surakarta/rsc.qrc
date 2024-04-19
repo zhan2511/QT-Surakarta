@@ -10,5 +10,14 @@
         <file>rsc/LoadGame.png</file>
         <file>rsc/BlackPawn.png</file>
         <file>rsc/WhitePawn.png</file>
+        <file>rsc/NO.png</file>
+        <file>rsc/SaveGame.png</file>
+        <file>rsc/Start.png</file>
+        <file>rsc/YES.png</file>
+        <file>rsc/ESC.png</file>
+        <file>rsc/Settings.png</file>
+        <file>rsc/Pause.png</file>
+        <file>rsc/Quit.png</file>
+        <file>rsc/Restart.png</file>
     </qresource>
 </RCC>

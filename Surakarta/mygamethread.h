@@ -23,8 +23,9 @@ public:
     SurakartaMove Whitemove;
     SurakartaGame game;
 
-
     void GamePre();//game的准备
+
+    bool m_stop=0;
 
     virtual void run() override;
 

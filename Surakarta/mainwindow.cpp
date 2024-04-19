@@ -28,6 +28,34 @@ MainWindow::MainWindow(QWidget *parent)
     // });//LOADGAME-切页2
 
 
+
+    //Gammers 设置图标和弹跳效果 跳转到棋盘
+    ui->Gamers->height=80;
+    ui->Gamers->width=250;
+    ui->Gamers->pixheight=80;
+    ui->Gamers->pixwidth=250;
+    ui->Gamers->SetCustomisedIcon(":/rsc/AIVSGamer.png");
+    ui->Gamers->setFixedSize(ui->Gamers->width,ui->Gamers->height);
+    connect(ui->Gamers,&QPushButton::clicked,this,[=](){
+        ui->Gamers->BounceDown();
+        QTimer::singleShot(100,this,[=](){
+            ui->Gamers->BounceUp();
+        });
+        QTimer::singleShot(100,this,[=](){
+            this->hide();
+            chessboard = new chess_window(0,this);
+            connect(chessboard,&chess_window::mainshow,this,[=](){
+                this->show();
+                ui->stackedWidget->setCurrentIndex(1);
+            });
+            chessboard->setAttribute(Qt::WA_DeleteOnClose);
+            chessboard->gamehour=gamehour;
+            chessboard->gamemin=gamemin;
+            chessboard->show();
+        });
+    });
+
+
     //AIVSGammer 设置图标和弹跳效果 跳转到棋盘
     ui->AIVSGamer->height=80;
     ui->AIVSGamer->width=250;
@@ -42,15 +70,15 @@ MainWindow::MainWindow(QWidget *parent)
         });
         QTimer::singleShot(100,this,[=](){
             this->hide();
-            chessboard = new chess_window(this);
+            chessboard = new chess_window(1,this);
+            connect(chessboard,&chess_window::mainshow,this,[=](){
+                this->show();
+                ui->stackedWidget->setCurrentIndex(1);
+            });
             chessboard->setAttribute(Qt::WA_DeleteOnClose);
-            // SurakartaGame *gamepre;
-            // chessboard->Blackagent=std::make_shared<SurakartaAgentBase>(gamepre->GetBoard(), gamepre->GetGameInfo(), gamepre->GetRuleManager());
-            // chessboard->Whiteagent=std::make_shared<SurakartaAgentBase>(gamepre->GetBoard(), gamepre->GetGameInfo(), gamepre->GetRuleManager());
-            // delete[] gamepre;
-            // if(chessboard->Blackagent==NULL){
-            //     qDebug()<<"set agent";
-            // }
+            chessboard->gamehour=gamehour;
+            chessboard->gamemin=gamemin;
+            chessboard->mode=1;
             chessboard->show();
         });
     });
@@ -68,6 +96,19 @@ MainWindow::MainWindow(QWidget *parent)
         QTimer::singleShot(100,this,[=](){
             ui->AIVSAI->BounceUp();
         });
+        QTimer::singleShot(100,this,[=](){
+            this->hide();
+            chessboard = new chess_window(2,this);
+            connect(chessboard,&chess_window::mainshow,this,[=](){
+                this->show();
+                ui->stackedWidget->setCurrentIndex(1);
+            });
+            chessboard->setAttribute(Qt::WA_DeleteOnClose);
+            chessboard->gamehour=gamehour;
+            chessboard->gamemin=gamemin;
+            chessboard->mode=2;
+            chessboard->show();
+        });
     });
 
 
@@ -82,6 +123,21 @@ MainWindow::MainWindow(QWidget *parent)
         ui->loadgame->BounceDown();
         QTimer::singleShot(100,this,[=](){
             ui->loadgame->BounceUp();
+        });
+    });
+
+
+    //Settings
+    ui->Settings->height=70;
+    ui->Settings->width=70;
+    ui->Settings->pixheight=70;
+    ui->Settings->pixwidth=70;
+    ui->Settings->SetCustomisedIcon(":/rsc/Settings.png");
+    ui->Settings->setFixedSize(ui->Settings->width,ui->Settings->height);
+    connect(ui->loadgame,&QPushButton::clicked,this,[=](){
+        ui->Settings->BounceDown();
+        QTimer::singleShot(100,this,[=](){
+            ui->Settings->BounceUp();
         });
     });
 
@@ -103,7 +159,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->Start->width=250;
     ui->Start->pixheight=250;
     ui->Start->pixwidth=250;
-    ui->Start->SetCustomisedIcon("");
+    ui->Start->SetCustomisedIcon(":/rsc/Start.png");
     ui->Start->setFixedSize(ui->Start->width,ui->Start->height);
     connect(ui->Start,&QPushButton::clicked,this,[=](){
         ui->Start->BounceDown();
@@ -134,6 +190,13 @@ MainWindow::MainWindow(QWidget *parent)
         });
     });
 
+    //ESC
+    ui->ESC->setStyleSheet("QPushButton{Border:0px}");
+    pix.load(":/rsc/ESC.png");
+    pix = pix.scaled(ui->ESC->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation) ;
+    ui->ESC->setIcon(pix);
+    ui->ESC->setIconSize(ui->ESC->size());
+    connect(ui->ESC,&QPushButton::clicked,this,&QMainWindow::close);
 
     // QPixmap pix_Title;
     // bool ret02= pix_Title.load(":/rsc/Surakarta.png");

@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "mypieces.h"
+#include "mypausedialog.h"
 #include <QTimer>
 #include <QTime>
 #include <QLabel>
@@ -19,13 +20,15 @@ class chess_window : public QMainWindow
 {
     Q_OBJECT
 public:
-    explicit chess_window(QWidget *parent = nullptr);
+    explicit chess_window(int mode,QWidget *parent = nullptr);
     // ~chess_window();
 
     void paintEvent(QPaintEvent *);
 
-    std::shared_ptr<SurakartaAgentBase> Blackagent=NULL;//设置ai
-    std::shared_ptr<SurakartaAgentBase> Whiteagent=NULL;//设置ai
+    int mode;//设置游戏模式：    0  Gamers      1  GamerVSAi       2  AiVSAi
+
+    std::shared_ptr<SurakartaAgentBase> Blackagent=NULL;//设置agent
+    std::shared_ptr<SurakartaAgentBase> Whiteagent=NULL;//设置agent
     // SurakartaPlayer BlackGamer=SurakartaPlayer::NONE;
     // SurakartaPlayer WhiteGamer=SurakartaPlayer::NONE;
 
@@ -48,25 +51,29 @@ public:
     QString WhitePawn=":/rsc/WhitePawn.png";//白棋棋子
     QString Blank="";//空棋子
 
-    QTime BTime;
-    QTime WTime;
+    QTime BTime;//黑时间
+    QTime WTime;//白时间
 
-    QLabel *Time;
-    QLabel *BlackTime;
-    QLabel *WhiteTime;
-    QLabel *Current_Player;
-    QLabel *Round;
-    QLabel *Winner;
+    QLabel *Time;//RoundTime
+    QLabel *BlackTime;//
+    QLabel *WhiteTime;//
+    QLabel *Current_Player;//
+    QLabel *Round;//
+    QLabel *Winner;//
 
-    QFont ft;
+    QFont ft;//字体
 
-    QString timestr;
-    int timeS=0;
-    int roundtimelimit=30;
-    QString BTimestr;
-    QString WTimestr;
-    int gamehour=0;
-    int gamemin=40;
+    MyPauseDialog *PauseDialog;
+
+    QPixmap pix;
+
+    // QString timestr;//Timer
+    int timeS=0;//
+    int roundtimelimit=30;//设置单次移动时间 sec
+    // QString BTimestr;//BTime
+    // QString WTimestr;//WTime
+    int gamehour=0;//设置移动总时间 h
+    int gamemin=40;//设置移动总时间 min
 
 
 signals:
@@ -78,7 +85,8 @@ signals:
     void whitegamermove(SurakartaGame gamecopy);//玩家进行有效的白棋移动
     void blackgamerturn();//用来提示玩家移动黑棋(暂未使用）
     void whitegamerturn();//用来提示玩家移动白棋(暂未使用）
-    void timeover(SurakartaGame gamecopy);
+    void timeover(SurakartaPlayer time_out);//超时信号
+    void mainshow();//关闭chesswindow后展示mainwindow
 
 
 
@@ -86,6 +94,7 @@ public slots:
     void select_(int pos);//存入起始位置frompos
     void moveend_(int pos);//存入最终位置topos
     void winner_(SurakartaGame game);//输出winner
+    void winner_(SurakartaPlayer time_out);//超时输出winner
     void setboard(SurakartaGame game);//更新棋盘
     void decideblackmove(SurakartaGame game);//判断玩家orAgent进行移动，传递黑棋移动
     void decidewhitemove(SurakartaGame game);//判断玩家orAgent进行移动，传递白棋移动

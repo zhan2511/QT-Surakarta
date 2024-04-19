@@ -56,6 +56,9 @@ constexpr auto qt_meta_stringdata_CLASSchess_windowENDCLASS = QtMocHelpers::stri
     "blackgamerturn",
     "whitegamerturn",
     "timeover",
+    "SurakartaPlayer",
+    "time_out",
+    "mainshow",
     "select_",
     "moveend_",
     "winner_",
@@ -66,7 +69,7 @@ constexpr auto qt_meta_stringdata_CLASSchess_windowENDCLASS = QtMocHelpers::stri
 );
 #else  // !QT_MOC_HAS_STRING_DATA
 struct qt_meta_stringdata_CLASSchess_windowENDCLASS_t {
-    uint offsetsAndSizes[48];
+    uint offsetsAndSizes[54];
     char stringdata0[13];
     char stringdata1[7];
     char stringdata2[1];
@@ -84,13 +87,16 @@ struct qt_meta_stringdata_CLASSchess_windowENDCLASS_t {
     char stringdata14[15];
     char stringdata15[15];
     char stringdata16[9];
-    char stringdata17[8];
+    char stringdata17[16];
     char stringdata18[9];
-    char stringdata19[8];
-    char stringdata20[5];
+    char stringdata19[9];
+    char stringdata20[8];
     char stringdata21[9];
-    char stringdata22[16];
-    char stringdata23[16];
+    char stringdata22[8];
+    char stringdata23[5];
+    char stringdata24[9];
+    char stringdata25[16];
+    char stringdata26[16];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(sizeof(qt_meta_stringdata_CLASSchess_windowENDCLASS_t::offsetsAndSizes) + ofs), len 
@@ -113,13 +119,16 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSchess_windowENDCLASS_t qt_meta_
         QT_MOC_LITERAL(140, 14),  // "blackgamerturn"
         QT_MOC_LITERAL(155, 14),  // "whitegamerturn"
         QT_MOC_LITERAL(170, 8),  // "timeover"
-        QT_MOC_LITERAL(179, 7),  // "select_"
-        QT_MOC_LITERAL(187, 8),  // "moveend_"
-        QT_MOC_LITERAL(196, 7),  // "winner_"
-        QT_MOC_LITERAL(204, 4),  // "game"
-        QT_MOC_LITERAL(209, 8),  // "setboard"
-        QT_MOC_LITERAL(218, 15),  // "decideblackmove"
-        QT_MOC_LITERAL(234, 15)   // "decidewhitemove"
+        QT_MOC_LITERAL(179, 15),  // "SurakartaPlayer"
+        QT_MOC_LITERAL(195, 8),  // "time_out"
+        QT_MOC_LITERAL(204, 8),  // "mainshow"
+        QT_MOC_LITERAL(213, 7),  // "select_"
+        QT_MOC_LITERAL(221, 8),  // "moveend_"
+        QT_MOC_LITERAL(230, 7),  // "winner_"
+        QT_MOC_LITERAL(238, 4),  // "game"
+        QT_MOC_LITERAL(243, 8),  // "setboard"
+        QT_MOC_LITERAL(252, 15),  // "decideblackmove"
+        QT_MOC_LITERAL(268, 15)   // "decidewhitemove"
     },
     "chess_window",
     "select",
@@ -138,6 +147,9 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSchess_windowENDCLASS_t qt_meta_
     "blackgamerturn",
     "whitegamerturn",
     "timeover",
+    "SurakartaPlayer",
+    "time_out",
+    "mainshow",
     "select_",
     "moveend_",
     "winner_",
@@ -156,31 +168,33 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSchess_windowENDCLASS[] = {
       12,       // revision
        0,       // classname
        0,    0, // classinfo
-      15,   14, // methods
+      17,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       9,       // signalCount
+      10,       // signalCount
 
  // signals: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    1,  104,    2, 0x06,    1 /* Public */,
-       4,    1,  107,    2, 0x06,    3 /* Public */,
-       5,    1,  110,    2, 0x06,    5 /* Public */,
-       8,    1,  113,    2, 0x06,    7 /* Public */,
-      10,    1,  116,    2, 0x06,    9 /* Public */,
-      13,    1,  119,    2, 0x06,   11 /* Public */,
-      14,    0,  122,    2, 0x06,   13 /* Public */,
-      15,    0,  123,    2, 0x06,   14 /* Public */,
-      16,    1,  124,    2, 0x06,   15 /* Public */,
+       1,    1,  116,    2, 0x06,    1 /* Public */,
+       4,    1,  119,    2, 0x06,    3 /* Public */,
+       5,    1,  122,    2, 0x06,    5 /* Public */,
+       8,    1,  125,    2, 0x06,    7 /* Public */,
+      10,    1,  128,    2, 0x06,    9 /* Public */,
+      13,    1,  131,    2, 0x06,   11 /* Public */,
+      14,    0,  134,    2, 0x06,   13 /* Public */,
+      15,    0,  135,    2, 0x06,   14 /* Public */,
+      16,    1,  136,    2, 0x06,   15 /* Public */,
+      19,    0,  139,    2, 0x06,   17 /* Public */,
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-      17,    1,  127,    2, 0x0a,   17 /* Public */,
-      18,    1,  130,    2, 0x0a,   19 /* Public */,
-      19,    1,  133,    2, 0x0a,   21 /* Public */,
-      21,    1,  136,    2, 0x0a,   23 /* Public */,
-      22,    1,  139,    2, 0x0a,   25 /* Public */,
-      23,    1,  142,    2, 0x0a,   27 /* Public */,
+      20,    1,  140,    2, 0x0a,   18 /* Public */,
+      21,    1,  143,    2, 0x0a,   20 /* Public */,
+      22,    1,  146,    2, 0x0a,   22 /* Public */,
+      22,    1,  149,    2, 0x0a,   24 /* Public */,
+      24,    1,  152,    2, 0x0a,   26 /* Public */,
+      25,    1,  155,    2, 0x0a,   28 /* Public */,
+      26,    1,  158,    2, 0x0a,   30 /* Public */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::Int,    3,
@@ -191,15 +205,17 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSchess_windowENDCLASS[] = {
     QMetaType::Void, 0x80000000 | 11,   12,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 11,   12,
+    QMetaType::Void, 0x80000000 | 17,   18,
+    QMetaType::Void,
 
  // slots: parameters
     QMetaType::Void, QMetaType::Int,    3,
     QMetaType::Void, QMetaType::Int,    3,
-    QMetaType::Void, 0x80000000 | 11,   20,
-    QMetaType::Void, 0x80000000 | 11,   20,
-    QMetaType::Void, 0x80000000 | 11,   20,
-    QMetaType::Void, 0x80000000 | 11,   20,
+    QMetaType::Void, 0x80000000 | 11,   23,
+    QMetaType::Void, 0x80000000 | 17,   18,
+    QMetaType::Void, 0x80000000 | 11,   23,
+    QMetaType::Void, 0x80000000 | 11,   23,
+    QMetaType::Void, 0x80000000 | 11,   23,
 
        0        // eod
 };
@@ -237,7 +253,9 @@ Q_CONSTINIT const QMetaObject chess_window::staticMetaObject = { {
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'timeover'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        QtPrivate::TypeAndForceComplete<SurakartaGame, std::false_type>,
+        QtPrivate::TypeAndForceComplete<SurakartaPlayer, std::false_type>,
+        // method 'mainshow'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'select_'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<int, std::false_type>,
@@ -247,6 +265,9 @@ Q_CONSTINIT const QMetaObject chess_window::staticMetaObject = { {
         // method 'winner_'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<SurakartaGame, std::false_type>,
+        // method 'winner_'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        QtPrivate::TypeAndForceComplete<SurakartaPlayer, std::false_type>,
         // method 'setboard'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<SurakartaGame, std::false_type>,
@@ -274,13 +295,15 @@ void chess_window::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         case 5: _t->whitegamermove((*reinterpret_cast< std::add_pointer_t<SurakartaGame>>(_a[1]))); break;
         case 6: _t->blackgamerturn(); break;
         case 7: _t->whitegamerturn(); break;
-        case 8: _t->timeover((*reinterpret_cast< std::add_pointer_t<SurakartaGame>>(_a[1]))); break;
-        case 9: _t->select_((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
-        case 10: _t->moveend_((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
-        case 11: _t->winner_((*reinterpret_cast< std::add_pointer_t<SurakartaGame>>(_a[1]))); break;
-        case 12: _t->setboard((*reinterpret_cast< std::add_pointer_t<SurakartaGame>>(_a[1]))); break;
-        case 13: _t->decideblackmove((*reinterpret_cast< std::add_pointer_t<SurakartaGame>>(_a[1]))); break;
-        case 14: _t->decidewhitemove((*reinterpret_cast< std::add_pointer_t<SurakartaGame>>(_a[1]))); break;
+        case 8: _t->timeover((*reinterpret_cast< std::add_pointer_t<SurakartaPlayer>>(_a[1]))); break;
+        case 9: _t->mainshow(); break;
+        case 10: _t->select_((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
+        case 11: _t->moveend_((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
+        case 12: _t->winner_((*reinterpret_cast< std::add_pointer_t<SurakartaGame>>(_a[1]))); break;
+        case 13: _t->winner_((*reinterpret_cast< std::add_pointer_t<SurakartaPlayer>>(_a[1]))); break;
+        case 14: _t->setboard((*reinterpret_cast< std::add_pointer_t<SurakartaGame>>(_a[1]))); break;
+        case 15: _t->decideblackmove((*reinterpret_cast< std::add_pointer_t<SurakartaGame>>(_a[1]))); break;
+        case 16: _t->decidewhitemove((*reinterpret_cast< std::add_pointer_t<SurakartaGame>>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -342,9 +365,16 @@ void chess_window::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
             }
         }
         {
-            using _t = void (chess_window::*)(SurakartaGame );
+            using _t = void (chess_window::*)(SurakartaPlayer );
             if (_t _q_method = &chess_window::timeover; *reinterpret_cast<_t *>(_a[1]) == _q_method) {
                 *result = 8;
+                return;
+            }
+        }
+        {
+            using _t = void (chess_window::*)();
+            if (_t _q_method = &chess_window::mainshow; *reinterpret_cast<_t *>(_a[1]) == _q_method) {
+                *result = 9;
                 return;
             }
         }
@@ -370,13 +400,13 @@ int chess_window::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 15)
+        if (_id < 17)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 15;
+        _id -= 17;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 15)
+        if (_id < 17)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 15;
+        _id -= 17;
     }
     return _id;
 }
@@ -436,9 +466,15 @@ void chess_window::whitegamerturn()
 }
 
 // SIGNAL 8
-void chess_window::timeover(SurakartaGame _t1)
+void chess_window::timeover(SurakartaPlayer _t1)
 {
     void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
     QMetaObject::activate(this, &staticMetaObject, 8, _a);
+}
+
+// SIGNAL 9
+void chess_window::mainshow()
+{
+    QMetaObject::activate(this, &staticMetaObject, 9, nullptr);
 }
 QT_WARNING_POP

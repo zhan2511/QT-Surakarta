@@ -2,6 +2,7 @@ release/chess_window.o
 release/main.o
 release/mainwindow.o
 release/mygamethread.o
+release/mypausedialog.o
 release/mypieces.o
 release/mypushbutton.o
 release/mywidget.o
@@ -15,6 +16,7 @@ release/qrc_rsc.o
 release/moc_chess_window.o
 release/moc_mainwindow.o
 release/moc_mygamethread.o
+release/moc_mypausedialog.o
 release/moc_mypieces.o
 release/moc_mypushbutton.o
 release/moc_mywidget.o
