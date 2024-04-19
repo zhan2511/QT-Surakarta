@@ -134,7 +134,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->Settings->pixwidth=70;
     ui->Settings->SetCustomisedIcon(":/rsc/Settings.png");
     ui->Settings->setFixedSize(ui->Settings->width,ui->Settings->height);
-    connect(ui->loadgame,&QPushButton::clicked,this,[=](){
+    connect(ui->Settings,&QPushButton::clicked,this,[=](){
         ui->Settings->BounceDown();
         QTimer::singleShot(100,this,[=](){
             ui->Settings->BounceUp();
