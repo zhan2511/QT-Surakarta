@@ -20,7 +20,7 @@ class chess_window : public QMainWindow
 {
     Q_OBJECT
 public:
-    explicit chess_window(int mode,QWidget *parent = nullptr);
+    explicit chess_window(int mode=0,int roundtimelimit=30,int gamehour=0,int gamemin=40,QWidget *parent = nullptr);
     // ~chess_window();
 
     void paintEvent(QPaintEvent *);

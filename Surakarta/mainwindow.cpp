@@ -4,6 +4,10 @@
 #include <QPixmap>
 #include <QTimer>
 #include <mypushbutton.h>
+#include "mysettingsdialog.h"
+#include "ui_mysettingsdialog.h"
+
+
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -29,12 +33,14 @@ MainWindow::MainWindow(QWidget *parent)
 
 
 
+
+
     //Gammers 设置图标和弹跳效果 跳转到棋盘
     ui->Gamers->height=80;
     ui->Gamers->width=250;
     ui->Gamers->pixheight=80;
     ui->Gamers->pixwidth=250;
-    ui->Gamers->SetCustomisedIcon(":/rsc/AIVSGamer.png");
+    ui->Gamers->SetCustomisedIcon(":/rsc/Gamers.png");
     ui->Gamers->setFixedSize(ui->Gamers->width,ui->Gamers->height);
     connect(ui->Gamers,&QPushButton::clicked,this,[=](){
         ui->Gamers->BounceDown();
@@ -43,14 +49,15 @@ MainWindow::MainWindow(QWidget *parent)
         });
         QTimer::singleShot(100,this,[=](){
             this->hide();
-            chessboard = new chess_window(0,this);
+            chessboard = new chess_window(0,roundtime,gamehour,gamemin,this);
             connect(chessboard,&chess_window::mainshow,this,[=](){
                 this->show();
                 ui->stackedWidget->setCurrentIndex(1);
             });
             chessboard->setAttribute(Qt::WA_DeleteOnClose);
-            chessboard->gamehour=gamehour;
-            chessboard->gamemin=gamemin;
+            // chessboard->roundtimelimit=roundtime;
+            // chessboard->gamehour=gamehour;
+            // chessboard->gamemin=gamemin;
             chessboard->show();
         });
     });
@@ -70,15 +77,15 @@ MainWindow::MainWindow(QWidget *parent)
         });
         QTimer::singleShot(100,this,[=](){
             this->hide();
-            chessboard = new chess_window(1,this);
+            chessboard = new chess_window(1,roundtime,gamehour,gamemin,this);
             connect(chessboard,&chess_window::mainshow,this,[=](){
                 this->show();
                 ui->stackedWidget->setCurrentIndex(1);
             });
             chessboard->setAttribute(Qt::WA_DeleteOnClose);
-            chessboard->gamehour=gamehour;
-            chessboard->gamemin=gamemin;
-            chessboard->mode=1;
+            // chessboard->roundtimelimit=roundtime;
+            // chessboard->gamehour=gamehour;
+            // chessboard->gamemin=gamemin;
             chessboard->show();
         });
     });
@@ -98,15 +105,15 @@ MainWindow::MainWindow(QWidget *parent)
         });
         QTimer::singleShot(100,this,[=](){
             this->hide();
-            chessboard = new chess_window(2,this);
+            chessboard = new chess_window(2,roundtime,gamehour,gamemin,this);
             connect(chessboard,&chess_window::mainshow,this,[=](){
                 this->show();
                 ui->stackedWidget->setCurrentIndex(1);
             });
             chessboard->setAttribute(Qt::WA_DeleteOnClose);
-            chessboard->gamehour=gamehour;
-            chessboard->gamemin=gamemin;
-            chessboard->mode=2;
+            // chessboard->roundtimelimit=roundtime;
+            // chessboard->gamehour=gamehour;
+            // chessboard->gamemin=gamemin;
             chessboard->show();
         });
     });
@@ -126,8 +133,9 @@ MainWindow::MainWindow(QWidget *parent)
         });
     });
 
+    //Setting界面
 
-    //Settings
+    //Settings按键
     ui->Settings->height=70;
     ui->Settings->width=70;
     ui->Settings->pixheight=70;
@@ -138,6 +146,21 @@ MainWindow::MainWindow(QWidget *parent)
         ui->Settings->BounceDown();
         QTimer::singleShot(100,this,[=](){
             ui->Settings->BounceUp();
+        });
+        QTimer::singleShot(100,this,[=](){
+            MySettingsDialog *SettingsDialog=new MySettingsDialog(this);
+            // Ui_MySettingsDialog *SettingsUi;
+            // SettingsUi=SettingsDialog->ui;
+            connect(SettingsDialog->ui->RoundTimeSpin,SIGNAL(valueChanged(int)),this,SLOT(SetRoundTime(int)));
+            connect(SettingsDialog->ui->GameTimeH,SIGNAL(valueChanged(int)),this,SLOT(SetGameHour(int)));
+            connect(SettingsDialog->ui->GameTimeMin,SIGNAL(valueChanged(int)),this,SLOT(SetGameMin(int)));
+            // roundtime=SettingsDialog->ui->RoundTimeSpin->value();
+            // roundtime=SettingsDialog->ui->GameTimeH->value();
+            // roundtime=SettingsDialog->ui->GameTimeMin->value();
+            SettingsDialog->ui->RoundTimeSpin->setValue(roundtime);
+            SettingsDialog->ui->GameTimeH->setValue(gamehour);
+            SettingsDialog->ui->GameTimeMin->setValue(gamemin);
+            SettingsDialog->show();
         });
     });
 
@@ -198,6 +221,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->ESC->setIconSize(ui->ESC->size());
     connect(ui->ESC,&QPushButton::clicked,this,&QMainWindow::close);
 
+
     // QPixmap pix_Title;
     // bool ret02= pix_Title.load(":/rsc/Surakarta.png");
     // if(!ret02){qDebug()<<"pix wrong";}
@@ -213,5 +237,19 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+
+void MainWindow::SetRoundTime(int sec){
+    qDebug()<<"set RoundTime  "<<sec;
+    roundtime=sec;
+}
+void MainWindow::SetGameHour(int h){
+    qDebug()<<"set GameHour  "<<h;
+    gamehour=h;
+}
+void MainWindow::SetGameMin(int min){
+    qDebug()<<"set GameMin  "<<min;
+    gamemin=min;
 }
 

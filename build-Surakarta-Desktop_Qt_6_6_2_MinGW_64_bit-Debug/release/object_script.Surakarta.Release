@@ -5,6 +5,7 @@ release/mygamethread.o
 release/mypausedialog.o
 release/mypieces.o
 release/mypushbutton.o
+release/mysettingsdialog.o
 release/mywidget.o
 release/main1.o
 release/surakarta_agent_mine.o
@@ -19,4 +20,5 @@ release/moc_mygamethread.o
 release/moc_mypausedialog.o
 release/moc_mypieces.o
 release/moc_mypushbutton.o
+release/moc_mysettingsdialog.o
 release/moc_mywidget.o

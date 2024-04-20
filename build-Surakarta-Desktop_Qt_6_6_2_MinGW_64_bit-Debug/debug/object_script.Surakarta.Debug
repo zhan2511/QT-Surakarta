@@ -5,6 +5,7 @@ debug/mygamethread.o
 debug/mypausedialog.o
 debug/mypieces.o
 debug/mypushbutton.o
+debug/mysettingsdialog.o
 debug/mywidget.o
 debug/main1.o
 debug/surakarta_agent_mine.o
@@ -19,4 +20,5 @@ debug/moc_mygamethread.o
 debug/moc_mypausedialog.o
 debug/moc_mypieces.o
 debug/moc_mypushbutton.o
+debug/moc_mysettingsdialog.o
 debug/moc_mywidget.o

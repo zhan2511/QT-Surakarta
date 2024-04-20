@@ -20,8 +20,14 @@ public:
 
     chess_window * chessboard = nullptr;
 
+    int roundtime=30;
     int gamehour=0;//设置移动总时间 h
     int gamemin=40;//设置移动总时间 min
+
+public slots:
+    void SetRoundTime(int sec);
+    void SetGameHour(int h);
+    void SetGameMin(int min);
 
 private:
     Ui::MainWindow *ui;

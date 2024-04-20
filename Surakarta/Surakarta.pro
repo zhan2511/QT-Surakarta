@@ -16,6 +16,7 @@ SOURCES += \
     mypausedialog.cpp \
     mypieces.cpp \
     mypushbutton.cpp \
+    mysettingsdialog.cpp \
     mywidget.cpp \
     surakarta/main1.cpp \
     surakarta/surakarta_agent/surakarta_agent_mine.cpp \
@@ -31,6 +32,7 @@ HEADERS += \
     mypausedialog.h \
     mypieces.h \
     mypushbutton.h \
+    mysettingsdialog.h \
     mywidget.h \
     surakarta/global_random_generator.h \
     surakarta/surakarta_agent/surakarta_agent_base.h \
@@ -44,7 +46,8 @@ HEADERS += \
     surakarta/surakarta_rule_manager.h
 
 FORMS += \
-    mainwindow.ui
+    mainwindow.ui \
+    mysettingsdialog.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

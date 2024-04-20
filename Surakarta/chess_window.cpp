@@ -15,7 +15,8 @@
 // SurakartaGame game;
 
 
-chess_window::chess_window(int mode,QWidget *parent): QMainWindow{parent},mode {mode}
+chess_window::chess_window(int mode,int roundtimelimit,int gamehour,int gamemin,QWidget *parent):
+    QMainWindow{parent},mode {mode},roundtimelimit{roundtimelimit},gamehour{gamehour},gamemin{gamemin}
 {
     this->setFixedSize(1200,800);
     this->setWindowIcon(QPixmap(":/rsc/Icon.jpg"));
@@ -52,7 +53,7 @@ chess_window::chess_window(int mode,QWidget *parent): QMainWindow{parent},mode {
         qDebug()<<"timer stop";
         timer->stop();
         timeS=0;
-        Time->setText("RoundTime   30");
+        Time->setText("RoundTime   "+QString::number(roundtimelimit));
     });
     connect(gamethread,&MyGameThread::WhiteTurn,this,[=](){
         qDebug()<<"timer start";
@@ -62,7 +63,7 @@ chess_window::chess_window(int mode,QWidget *parent): QMainWindow{parent},mode {
         qDebug()<<"timer stop";
         timer->stop();
         timeS=0;
-        Time->setText("RoundTime   30");
+        Time->setText("RoundTime   "+QString::number(roundtimelimit));
     });
     connect(gamethread,&MyGameThread::Finished,this,[=](){timer->stop();});
     connect(timer,&QTimer::timeout,[=](){
@@ -170,7 +171,7 @@ chess_window::chess_window(int mode,QWidget *parent): QMainWindow{parent},mode {
     Time->setFixedSize(280,100);
     Time->move(850,300);
     Time->setFont(ft);
-    Time->setText("RoundTime   30");
+    Time->setText("RoundTime   "+QString::number(roundtimelimit));
 
     BlackTime=new QLabel(this);
     BlackTime->setFixedSize(280,100);
