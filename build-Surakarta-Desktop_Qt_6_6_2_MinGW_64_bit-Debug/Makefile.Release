@@ -1243,8 +1243,8 @@ release/moc_mypushbutton.cpp: ../Surakarta/mypushbutton.h \
 	E:\QT\6.6.2\mingw_64\bin\moc.exe $(DEFINES) --include E:/QT-Surakarta/build-Surakarta-Desktop_Qt_6_6_2_MinGW_64_bit-Debug/release/moc_predefs.h -IE:/QT/6.6.2/mingw_64/mkspecs/win32-g++ -IE:/QT-Surakarta/Surakarta -IE:/QT/6.6.2/mingw_64/include -IE:/QT/6.6.2/mingw_64/include/QtWidgets -IE:/QT/6.6.2/mingw_64/include/QtGui -IE:/QT/6.6.2/mingw_64/include/QtCore -I. -IE:/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++ -IE:/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/x86_64-w64-mingw32 -IE:/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/backward -IE:/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include -IE:/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include-fixed -IE:/QT/Tools/mingw1120_64/x86_64-w64-mingw32/include ..\Surakarta\mypushbutton.h -o release\moc_mypushbutton.cpp
 
 release/moc_mysettingsdialog.cpp: ../Surakarta/mysettingsdialog.h \
-		../../QT/6.6.2/mingw_64/include/QtWidgets/QWidget \
-		../../QT/6.6.2/mingw_64/include/QtWidgets/qwidget.h \
+		../../QT/6.6.2/mingw_64/include/QtWidgets/QDialog \
+		../../QT/6.6.2/mingw_64/include/QtWidgets/qdialog.h \
 		../../QT/6.6.2/mingw_64/include/QtWidgets/qtwidgetsglobal.h \
 		../../QT/6.6.2/mingw_64/include/QtGui/qtguiglobal.h \
 		../../QT/6.6.2/mingw_64/include/QtCore/qglobal.h \
@@ -1294,6 +1294,7 @@ release/moc_mysettingsdialog.cpp: ../Surakarta/mysettingsdialog.h \
 		../../QT/6.6.2/mingw_64/include/QtGui/qtguiexports.h \
 		../../QT/6.6.2/mingw_64/include/QtWidgets/qtwidgets-config.h \
 		../../QT/6.6.2/mingw_64/include/QtWidgets/qtwidgetsexports.h \
+		../../QT/6.6.2/mingw_64/include/QtWidgets/qwidget.h \
 		../../QT/6.6.2/mingw_64/include/QtGui/qwindowdefs.h \
 		../../QT/6.6.2/mingw_64/include/QtCore/qobjectdefs.h \
 		../../QT/6.6.2/mingw_64/include/QtCore/qnamespace.h \
@@ -2937,7 +2938,12 @@ release/mainwindow.o: ../Surakarta/mainwindow.cpp ../Surakarta/mainwindow.h \
 		../../QT/6.6.2/mingw_64/include/QtGui/qpen.h \
 		../../QT/6.6.2/mingw_64/include/QtGui/QPixmap \
 		../Surakarta/mysettingsdialog.h \
-		ui_mysettingsdialog.h
+		ui_mysettingsdialog.h \
+		../../QT/6.6.2/mingw_64/include/QtWidgets/QSpinBox \
+		../../QT/6.6.2/mingw_64/include/QtWidgets/qspinbox.h \
+		../../QT/6.6.2/mingw_64/include/QtWidgets/qabstractspinbox.h \
+		../../QT/6.6.2/mingw_64/include/QtGui/qvalidator.h \
+		../../QT/6.6.2/mingw_64/include/QtCore/qregularexpression.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\mainwindow.o ..\Surakarta\mainwindow.cpp
 
 release/mygamethread.o: ../Surakarta/mygamethread.cpp ../Surakarta/mygamethread.h \
@@ -3585,8 +3591,8 @@ release/mypushbutton.o: ../Surakarta/mypushbutton.cpp ../Surakarta/mypushbutton.
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\mypushbutton.o ..\Surakarta\mypushbutton.cpp
 
 release/mysettingsdialog.o: ../Surakarta/mysettingsdialog.cpp ../Surakarta/mysettingsdialog.h \
-		../../QT/6.6.2/mingw_64/include/QtWidgets/QWidget \
-		../../QT/6.6.2/mingw_64/include/QtWidgets/qwidget.h \
+		../../QT/6.6.2/mingw_64/include/QtWidgets/QDialog \
+		../../QT/6.6.2/mingw_64/include/QtWidgets/qdialog.h \
 		../../QT/6.6.2/mingw_64/include/QtWidgets/qtwidgetsglobal.h \
 		../../QT/6.6.2/mingw_64/include/QtGui/qtguiglobal.h \
 		../../QT/6.6.2/mingw_64/include/QtCore/qglobal.h \
@@ -3636,6 +3642,7 @@ release/mysettingsdialog.o: ../Surakarta/mysettingsdialog.cpp ../Surakarta/myset
 		../../QT/6.6.2/mingw_64/include/QtGui/qtguiexports.h \
 		../../QT/6.6.2/mingw_64/include/QtWidgets/qtwidgets-config.h \
 		../../QT/6.6.2/mingw_64/include/QtWidgets/qtwidgetsexports.h \
+		../../QT/6.6.2/mingw_64/include/QtWidgets/qwidget.h \
 		../../QT/6.6.2/mingw_64/include/QtGui/qwindowdefs.h \
 		../../QT/6.6.2/mingw_64/include/QtCore/qobjectdefs.h \
 		../../QT/6.6.2/mingw_64/include/QtCore/qnamespace.h \
@@ -3747,7 +3754,46 @@ release/mysettingsdialog.o: ../Surakarta/mysettingsdialog.cpp ../Surakarta/myset
 		../../QT/6.6.2/mingw_64/include/QtCore/QSizeF \
 		../../QT/6.6.2/mingw_64/include/QtGui/QTransform \
 		../../QT/6.6.2/mingw_64/include/QtCore/qnativeinterface.h \
-		ui_mysettingsdialog.h
+		ui_mysettingsdialog.h \
+		../../QT/6.6.2/mingw_64/include/QtCore/QVariant \
+		../../QT/6.6.2/mingw_64/include/QtWidgets/QApplication \
+		../../QT/6.6.2/mingw_64/include/QtWidgets/qapplication.h \
+		../../QT/6.6.2/mingw_64/include/QtCore/qcoreapplication.h \
+		../../QT/6.6.2/mingw_64/include/QtCore/qeventloop.h \
+		../../QT/6.6.2/mingw_64/include/QtCore/qcoreapplication_platform.h \
+		../../QT/6.6.2/mingw_64/include/QtCore/qfuture.h \
+		../../QT/6.6.2/mingw_64/include/QtCore/qfutureinterface.h \
+		../../QT/6.6.2/mingw_64/include/QtCore/qmutex.h \
+		../../QT/6.6.2/mingw_64/include/QtCore/qdeadlinetimer.h \
+		../../QT/6.6.2/mingw_64/include/QtCore/qelapsedtimer.h \
+		../../QT/6.6.2/mingw_64/include/QtCore/qtsan_impl.h \
+		../../QT/6.6.2/mingw_64/include/QtCore/qresultstore.h \
+		../../QT/6.6.2/mingw_64/include/QtCore/qfuture_impl.h \
+		../../QT/6.6.2/mingw_64/include/QtCore/qthreadpool.h \
+		../../QT/6.6.2/mingw_64/include/QtCore/qthread.h \
+		../../QT/6.6.2/mingw_64/include/QtCore/qrunnable.h \
+		../../QT/6.6.2/mingw_64/include/QtCore/qexception.h \
+		../../QT/6.6.2/mingw_64/include/QtCore/qpromise.h \
+		../../QT/6.6.2/mingw_64/include/QtGui/qguiapplication.h \
+		../../QT/6.6.2/mingw_64/include/QtGui/qinputmethod.h \
+		../../QT/6.6.2/mingw_64/include/QtCore/qlocale.h \
+		../../QT/6.6.2/mingw_64/include/QtGui/qguiapplication_platform.h \
+		../../QT/6.6.2/mingw_64/include/QtWidgets/QGroupBox \
+		../../QT/6.6.2/mingw_64/include/QtWidgets/qgroupbox.h \
+		../../QT/6.6.2/mingw_64/include/QtWidgets/qframe.h \
+		../../QT/6.6.2/mingw_64/include/QtWidgets/QLabel \
+		../../QT/6.6.2/mingw_64/include/QtWidgets/qlabel.h \
+		../../QT/6.6.2/mingw_64/include/QtGui/qpicture.h \
+		../../QT/6.6.2/mingw_64/include/QtGui/qtextdocument.h \
+		../../QT/6.6.2/mingw_64/include/QtWidgets/QPushButton \
+		../../QT/6.6.2/mingw_64/include/QtWidgets/qpushbutton.h \
+		../../QT/6.6.2/mingw_64/include/QtWidgets/qabstractbutton.h \
+		../../QT/6.6.2/mingw_64/include/QtWidgets/QSpinBox \
+		../../QT/6.6.2/mingw_64/include/QtWidgets/qspinbox.h \
+		../../QT/6.6.2/mingw_64/include/QtWidgets/qabstractspinbox.h \
+		../../QT/6.6.2/mingw_64/include/QtGui/qvalidator.h \
+		../../QT/6.6.2/mingw_64/include/QtCore/qregularexpression.h \
+		../../QT/6.6.2/mingw_64/include/QtWidgets/QWidget
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\mysettingsdialog.o ..\Surakarta\mysettingsdialog.cpp
 
 release/mywidget.o: ../Surakarta/mywidget.cpp ../Surakarta/mywidget.h \

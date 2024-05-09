@@ -22,7 +22,7 @@ MyGameThread::MyGameThread(QObject *parent)
 
 void MyGameThread::run()
 {
-    bool turn/* = rand() % 2*/;
+    bool turn = 0/* = rand() % 2*/;
     while (!game.IsEnd()&&!m_stop) {
         // QThread::msleep(500);
         if (!turn) {

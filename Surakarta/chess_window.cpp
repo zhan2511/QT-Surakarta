@@ -126,28 +126,37 @@ chess_window::chess_window(int mode,int roundtimelimit,int gamehour,int gamemin,
     connect(PauseDialog->Restart,&QPushButton::clicked,this,[=/*,&gamethread*/](){
         PauseDialog->hide();
 
+        qDebug()<<"    ====";
+
+
         // gamethread->quit();
         // gamethread->wait(25);
         // qDebug()<<"game exit";
         // gamethread->terminate();
 
-        // if(gamethread->isRunning()){
-        // disconnect(gamethread,SIGNAL(OneMove(SurakartaGame)),this,SLOT(setboard(SurakartaGame)));
-        // disconnect(gamethread,SIGNAL(Finished(SurakartaGame)),this,SLOT(winner_(SurakartaGame)));
-        // gamethread->m_stop=1;
-        // condition.wakeAll();
-        // gamethread->quit();
-        // qDebug()<<"game exit";
-        // gamethread->wait(25);
-        // }
-        // QTimer::singleShot(100,this,[=/*,&gamethread*/](){
-        //     // gamethread=new MyGameThread(this);
-        //     connect(gamethread,SIGNAL(OneMove(SurakartaGame)),this,SLOT(setboard(SurakartaGame)));
-        //     connect(gamethread,SIGNAL(Finished(SurakartaGame)),this,SLOT(winner_(SurakartaGame)));
-        //     gamethread->m_stop=0;
-        //     gamethread->GamePre();
-        //     gamethread->start();
-        // });
+        if(gamethread->isRunning()){
+        disconnect(gamethread,SIGNAL(OneMove(SurakartaGame)),this,SLOT(setboard(SurakartaGame)));
+        disconnect(gamethread,SIGNAL(Finished(SurakartaGame)),this,SLOT(winner_(SurakartaGame)));
+        gamethread->m_stop=1;
+        condition.wakeAll();
+        gamethread->quit();
+        qDebug()<<"game exit";
+        gamethread->wait(25);
+        }
+
+
+
+        QTimer::singleShot(100,this,[=/*,&gamethread*/](){
+            // gamethread=new MyGameThread(this);
+            BTime=QTime(gamehour,gamemin);
+            WTime=QTime(gamehour,gamemin);
+            timeS=0;
+            connect(gamethread,SIGNAL(OneMove(SurakartaGame)),this,SLOT(setboard(SurakartaGame)));
+            connect(gamethread,SIGNAL(Finished(SurakartaGame)),this,SLOT(winner_(SurakartaGame)));
+            gamethread->m_stop=0;
+            gamethread->GamePre();
+            gamethread->start();
+        });
     });
 
 
@@ -256,7 +265,7 @@ chess_window::chess_window(int mode,int roundtimelimit,int gamehour,int gamemin,
         // auto ret=gamethread->isRunning();
         // qDebug()<<ret;
         gamethread->wait(25);
-        gamethread->terminate();
+        // gamethread->terminate();//###########  ****，害死我了，****
         // disconnect(gamethread,SIGNAL(OneMove(SurakartaGame)),this,SLOT(setboard(SurakartaGame)));
         // disconnect(gamethread,SIGNAL(Finished(SurakartaGame)),this,SLOT(winner_(SurakartaGame)));
         // gamethread->m_stop=1;
@@ -267,7 +276,7 @@ chess_window::chess_window(int mode,int roundtimelimit,int gamehour,int gamemin,
     });
 
     //连接：退出线程后删除线程
-    connect(gamethread,&QThread::finished,gamethread,&QThread::deleteLater);
+    // connect(gamethread,&QThread::finished,gamethread,&QThread::deleteLater);//###########  ****，害死我了，****
 
     //开始线程
     qDebug()<<"ready to start";
