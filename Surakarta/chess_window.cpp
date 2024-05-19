@@ -200,10 +200,6 @@ chess_window::chess_window(int mode,int roundtimelimit,int gamehour,int gamemin,
     Winner->setFont(ft);
 
 
-
-
-
-
     //创建棋子piece并存入棋盘pieces
     for(int i=0;i<36;++i)
     {

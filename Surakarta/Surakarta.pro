@@ -1,4 +1,5 @@
 QT       += core gui
+QT       += network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -12,12 +13,18 @@ SOURCES += \
     chess_window.cpp \
     main.cpp \
     mainwindow.cpp \
+    myclientwindow.cpp \
     mygamethread.cpp \
+    mynetdialog.cpp \
     mypausedialog.cpp \
     mypieces.cpp \
     mypushbutton.cpp \
+    myserverwindow.cpp \
     mysettingsdialog.cpp \
     mywidget.cpp \
+    network/networkdata.cpp \
+    network/networkserver.cpp \
+    network/networksocket.cpp \
     surakarta/main1.cpp \
     surakarta/surakarta_agent/surakarta_agent_mine.cpp \
     surakarta/surakarta_agent/surakarta_agent_random.cpp \
@@ -28,12 +35,18 @@ SOURCES += \
 HEADERS += \
     chess_window.h \
     mainwindow.h \
+    myclientwindow.h \
     mygamethread.h \
+    mynetdialog.h \
     mypausedialog.h \
     mypieces.h \
     mypushbutton.h \
+    myserverwindow.h \
     mysettingsdialog.h \
     mywidget.h \
+    network/networkdata.h \
+    network/networkserver.h \
+    network/networksocket.h \
     surakarta/global_random_generator.h \
     surakarta/surakarta_agent/surakarta_agent_base.h \
     surakarta/surakarta_agent/surakarta_agent_mine.h \
@@ -47,6 +60,9 @@ HEADERS += \
 
 FORMS += \
     mainwindow.ui \
+    myclientwindow.ui \
+    mynetdialog.ui \
+    myserverwindow.ui \
     mysettingsdialog.ui
 
 # Default rules for deployment.

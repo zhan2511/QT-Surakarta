@@ -19,5 +19,16 @@
         <file>rsc/Pause.png</file>
         <file>rsc/Quit.png</file>
         <file>rsc/Restart.png</file>
+        <file>rsc/Client.png</file>
+        <file>rsc/OnlineGame.png</file>
+        <file>rsc/Server.png</file>
+        <file>rsc/__.png</file>
+        <file>rsc/ConnectToHost.png</file>
+        <file>rsc/Listen.png</file>
+        <file>rsc/Send.png</file>
+        <file>rsc/ToAll.png</file>
+        <file>rsc/ToPlayer1.png</file>
+        <file>rsc/ToPlayer2.png</file>
+        <file>rsc/Ready.png</file>
     </qresource>
 </RCC>

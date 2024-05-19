@@ -6,6 +6,9 @@
 #include <mypushbutton.h>
 #include "mysettingsdialog.h"
 #include "ui_mysettingsdialog.h"
+#include "mynetdialog.h"
+#include "ui_mynetdialog.h"
+#include <QDialog>
 
 
 
@@ -119,17 +122,26 @@ MainWindow::MainWindow(QWidget *parent)
     });
 
 
-    //LoadGame 设置图标和弹跳效果
-    ui->loadgame->height=80;
-    ui->loadgame->width=250;
-    ui->loadgame->pixheight=80;
-    ui->loadgame->pixwidth=250;
-    ui->loadgame->SetCustomisedIcon(":/rsc/LoadGame.png");
-    ui->loadgame->setFixedSize(ui->loadgame->width,ui->loadgame->height);
-    connect(ui->loadgame,&QPushButton::clicked,this,[=](){
-        ui->loadgame->BounceDown();
+    //OnlineGame 设置图标和弹跳效果
+    ui->OnlineGame->height=80;
+    ui->OnlineGame->width=250;
+    ui->OnlineGame->pixheight=80;
+    ui->OnlineGame->pixwidth=250;
+    ui->OnlineGame->SetCustomisedIcon(":/rsc/OnlineGame.png");
+    ui->OnlineGame->setFixedSize(ui->OnlineGame->width,ui->OnlineGame->height);
+    connect(ui->OnlineGame,&QPushButton::clicked,this,[=](){
+        ui->OnlineGame->BounceDown();
         QTimer::singleShot(100,this,[=](){
-            ui->loadgame->BounceUp();
+            ui->OnlineGame->BounceUp();
+        });
+        QTimer::singleShot(100,this,[=](){
+            MyNetDialog *NetDialog = new MyNetDialog(this);
+            this->hide();
+            connect(NetDialog,&MyNetDialog::mainshow,this,[=](){
+                this->show();
+                ui->stackedWidget->setCurrentIndex(1);
+            });
+            NetDialog->show();
         });
     });
 
