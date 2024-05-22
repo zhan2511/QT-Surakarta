@@ -30,5 +30,10 @@
         <file>rsc/ToPlayer1.png</file>
         <file>rsc/ToPlayer2.png</file>
         <file>rsc/Ready.png</file>
+        <file>rsc/Leave.png</file>
+        <file>rsc/Resign.png</file>
+        <file>rsc/Agent.png</file>
+        <file>rsc/Tick.png</file>
+        <file>rsc/Untick.png</file>
     </qresource>
 </RCC>

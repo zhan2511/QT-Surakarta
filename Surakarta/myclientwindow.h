@@ -9,6 +9,8 @@
 
 
 
+
+
 namespace Ui {
 class MyClientWindow;
 }
@@ -34,25 +36,34 @@ public:
     QString Blank="";//空棋子
 
     QString Name = "New Player";
-    QString ip = "";
+    QString ip = QHostAddress(QHostAddress::LocalHost).toString();
+    QString port = "9999";
+
+    // SurakartaMove Gamermove_;//用来判断玩家是否进行了有效移动：Gamermove_.player==UNKNOWN被认为是未进行有效移动
 
     SurakartaPlayer Me;
-    SurakartaMove Gamermove_;//用来判断玩家是否进行了有效移动：Gamermove_.player==UNKNOWN被认为是未进行有效移动
+    SurakartaPlayer Opponent;
+    SurakartaPlayer CurrentPlayer = SurakartaPlayer::UNKNOWN;
 
-    QLabel *HostIp;
-    QLabel *Current_Player;//
-    QLabel *Round;//
-    QLabel *Status;
+    std::shared_ptr<SurakartaAgentBase> Agent=NULL;//设置agent
+
+    bool isAgent=0;
+
+    // QLabel *HostIp;
+    // QLabel *Current_Player;//
+    // QLabel *Round;//
+    // QLabel *Status;
 
     QFont ft;//字体
     QPixmap pix;
 
-    void OriginalBoard(SurakartaGame game);//设置棋盘
+    void SetBoard(SurakartaGame game);//设置棋盘
 
     bool status=0;//用来判断棋子的点击是选取还是移动     1 to select    0 to moveend
     int frompos;//起始位置
     int topos;//最终位置
     void SendMove(int frompos,int topos);
+    void SendMove(SurakartaMove move);
 
     void Chat(QString message);
 
@@ -64,6 +75,8 @@ signals:
 public slots:
     void select_(int pos);//存入起始位置frompos
     void moveend_(int pos);//存入最终位置topos
+    void onreceive(NetworkData data);
+    void AgentMove(SurakartaGame gamecopy);
 
 
 private:

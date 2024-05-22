@@ -16,6 +16,7 @@ SOURCES += \
     myclientwindow.cpp \
     mygamethread.cpp \
     mynetdialog.cpp \
+    mynetwidget.cpp \
     mypausedialog.cpp \
     mypieces.cpp \
     mypushbutton.cpp \
@@ -38,6 +39,7 @@ HEADERS += \
     myclientwindow.h \
     mygamethread.h \
     mynetdialog.h \
+    mynetwidget.h \
     mypausedialog.h \
     mypieces.h \
     mypushbutton.h \
@@ -62,6 +64,7 @@ FORMS += \
     mainwindow.ui \
     myclientwindow.ui \
     mynetdialog.ui \
+    mynetwidget.ui \
     myserverwindow.ui \
     mysettingsdialog.ui
 

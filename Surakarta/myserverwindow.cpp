@@ -16,12 +16,12 @@ MyServerWindow::MyServerWindow(QWidget *parent)
     QPixmap pix;
 
     //Listen 按键
-    ui->Listen->setFixedSize(QSize(100,50));
+    ui->Listen->setFixedSize(ui->Listen->size());
     ui->Listen->setStyleSheet("QPushButton{Border:0px}");
     pix.load(":/rsc/Listen.png");
     pix = pix.scaled(ui->Listen->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation) ;
     ui->Listen->setIcon(pix);
-    ui->Listen->setIconSize(QSize(100,50));
+    ui->Listen->setIconSize(ui->Listen->size());
     connect(ui->Listen,&QPushButton::clicked,this,[=](){
         bool isListen = Server->listen(QHostAddress::LocalHost,9999);
         if(isListen == false ){
@@ -38,12 +38,12 @@ MyServerWindow::MyServerWindow(QWidget *parent)
 
     //ToPlayer1 按键
     ui->ToPlayer1->setEnabled(false);
-    ui->ToPlayer1->setFixedSize(QSize(120,40));
+    ui->ToPlayer1->setFixedSize(ui->ToPlayer1->size());
     ui->ToPlayer1->setStyleSheet("QPushButton{Border:0px}");
     pix.load(":/rsc/ToPlayer1.png");
     pix = pix.scaled(ui->ToPlayer1->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation) ;
     ui->ToPlayer1->setIcon(pix);
-    ui->ToPlayer1->setIconSize(QSize(120,40));
+    ui->ToPlayer1->setIconSize(ui->ToPlayer1->size());
     connect(ui->ToPlayer1,&QPushButton::clicked,this,[=](){
             Server->send(Server->clients[0],NetworkData(OPCODE::CHAT_OP,"Server",ui->SendText->toPlainText(),""));
             ui->SendText->clear();
@@ -51,12 +51,12 @@ MyServerWindow::MyServerWindow(QWidget *parent)
 
     //ToPlayer2 按键
     ui->ToPlayer2->setEnabled(false);
-    ui->ToPlayer2->setFixedSize(QSize(120,40));
+    ui->ToPlayer2->setFixedSize(ui->ToPlayer2->size());
     ui->ToPlayer2->setStyleSheet("QPushButton{Border:0px}");
     pix.load(":/rsc/ToPlayer2.png");
     pix = pix.scaled(ui->ToPlayer2->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation) ;
     ui->ToPlayer2->setIcon(pix);
-    ui->ToPlayer2->setIconSize(QSize(120,40));
+    ui->ToPlayer2->setIconSize(ui->ToPlayer2->size());
     connect(ui->ToPlayer2,&QPushButton::clicked,this,[=](){
             Server->send(Server->clients[1],NetworkData(OPCODE::CHAT_OP,"Server",ui->SendText->toPlainText(),""));
             ui->SendText->clear();
@@ -64,16 +64,34 @@ MyServerWindow::MyServerWindow(QWidget *parent)
 
     //ToAll 按键
     ui->ToAll->setEnabled(false);
-    ui->ToAll->setFixedSize(QSize(120,40));
+    ui->ToAll->setFixedSize(ui->ToAll->size());
     ui->ToAll->setStyleSheet("QPushButton{Border:0px}");
     pix.load(":/rsc/ToAll.png");
     pix = pix.scaled(ui->ToAll->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation) ;
     ui->ToAll->setIcon(pix);
-    ui->ToAll->setIconSize(QSize(120,50));
+    ui->ToAll->setIconSize(ui->ToAll->size());
     connect(ui->ToAll,&QPushButton::clicked,this,[=](){
             Server->send(Server->clients[0],NetworkData(OPCODE::CHAT_OP,"Server",ui->SendText->toPlainText(),""));
             Server->send(Server->clients[1],NetworkData(OPCODE::CHAT_OP,"Server",ui->SendText->toPlainText(),""));
             ui->SendText->clear();
+    });
+
+    //ESC 按键
+    ui->ESC->setFixedSize(ui->ESC->size());
+    ui->ESC->setStyleSheet("QPushButton{Border:0px}");
+    pix.load(":/rsc/ESC.png");
+    pix = pix.scaled(ui->ESC->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation) ;
+    ui->ESC->setIcon(pix);
+    ui->ESC->setIconSize(ui->ESC->size());
+    connect(ui->ESC,&QPushButton::clicked,this,[=](){
+        while (!Server->clients.isEmpty()) {
+            Server->clients[0]->disconnectFromHost();
+            Server->clients.erase(Server->clients.begin());
+        }
+        gamethread->quit();
+        gamethread->wait(25);
+        gamethread->terminate();
+        this->close();
     });
 
     //
@@ -87,6 +105,10 @@ MyServerWindow::MyServerWindow(QWidget *parent)
     //
     connect(Server,SIGNAL(receive(QTcpSocket*, NetworkData)),this,SLOT(onreceive(QTcpSocket*, NetworkData)));
 
+    //
+    connect(Server,&QTcpServer::newConnection,this,[=](){
+        ui->MessageText->append("Server : Someone is connected!") ;
+    });
 
 }
 
@@ -96,15 +118,16 @@ MyServerWindow::~MyServerWindow()
 }
 
 
-void MyServerWindow::onreceive(QTcpSocket* client, NetworkData data)
+void MyServerWindow::onreceive(QTcpSocket* client1, NetworkData data)
 {
-    QTcpSocket* client1,*client2;
-    if(client == Server->clients[0]){
-        client1 = client;
+    if(Server->clients.size()<2){
+        return;
+    }
+    QTcpSocket*client2;
+    if(client1== Server->clients[0]){
         client2 = Server->clients[1];
     }else{
-        client2 = client;
-        client1 = Server->clients[0];
+        client2 = Server->clients[0];
     }
     if(data.op==OPCODE::CHAT_OP){
         ui->MessageText->append(data.data1+" : "+data.data2);
@@ -112,10 +135,10 @@ void MyServerWindow::onreceive(QTcpSocket* client, NetworkData data)
     }else if(data.op==OPCODE::READY_OP){
         ui->MessageText->append(data.data1+" : "+data.data1+" is Ready!");
         Server->send(client2,NetworkData(OPCODE::CHAT_OP,data.data1,QString(data.data1+" is Ready!"),""));
-        if(client == Server->clients[0]){
+        if(client1 == Server->clients[0]){
             isReadyP1 = 1;
             P1Name = data.data1;
-        }else if(client == Server->clients[1]){
+        }else if(client1 == Server->clients[1]){
             isReadyP2 = 1;
             P2Name = data.data1;
         }
@@ -123,13 +146,40 @@ void MyServerWindow::onreceive(QTcpSocket* client, NetworkData data)
             Gamestart();
         }
     }else if(data.op==OPCODE::MOVE_OP){
-        if(client == Server->clients[0]){
-            move = SurakartaMove(data.data1[0].unicode()-'A',data.data1[1].unicode()-1,
-                                 data.data2[0].unicode()-'A',data.data2[1].unicode()-1,P1Color);
+        if(client1 == Server->clients[0]){
+            move = SurakartaMove(data.data1[0].unicode()-'A',data.data1[1].unicode()-'1',
+                                 data.data2[0].unicode()-'A',data.data2[1].unicode()-'1',P1Color);
+            qDebug()<<"Move "<<data.data1[1].unicode()-'1'
+                     <<data.data1[0].unicode()-'A'
+                     <<data.data2[1].unicode()-'1'
+                     <<data.data2[0].unicode()-'A';
             Move(move);
+            QTimer::singleShot(500,this,[=](){
+                Server->send(Server->clients[1],data);
+            });
+        }else if(client1 == Server->clients[1]){
+            move = SurakartaMove(data.data1[0].unicode()-'A',data.data1[1].unicode()-'1',
+                                 data.data2[0].unicode()-'A',data.data2[1].unicode()-'1',P2Color);
+            qDebug()<<"Move "<<data.data1[1].unicode()-'1'
+                     <<data.data1[0].unicode()-'A'
+                     <<data.data2[1].unicode()-'1'
+                     <<data.data2[0].unicode()-'A';
+            Move(move);
+            QTimer::singleShot(500,this,[=](){
+                Server->send(Server->clients[0],data);
+            });
         }
+    }else if(data.op==OPCODE::RESIGN_OP){
+        SurakartaGame game;
+        if(client1 == Server->clients[0]){
+            game.game_info_->end_reason_ = SurakartaEndReason::NONE;
+            game.game_info_->winner_ = P2Color;
+        }else if(client1 == Server->clients[1]){
+            game.game_info_->end_reason_ = SurakartaEndReason::NONE;
+            game.game_info_->winner_ = P1Color;
+        }
+        Gameover(game);
     }
-
 }
 
 void MyServerWindow::Gamestart()
@@ -151,11 +201,14 @@ void MyServerWindow::Gamestart()
 
     connect(gamethread,&MyGameThread::BlackTurn,this,[=](){
         Turn = 0;
+        qDebug()<<"BlackTurn,Turn=0";
     });
     connect(gamethread,&MyGameThread::WhiteTurn,this,[=](){
         Turn = 1;
+        qDebug()<<"BlackTurn,Turn=1";
     });
     connect(gamethread,SIGNAL(Finished(SurakartaGame)),this,SLOT(Gameover(SurakartaGame)));
+
 }
 
 void MyServerWindow::Gameover(SurakartaGame game)
@@ -166,6 +219,10 @@ void MyServerWindow::Gameover(SurakartaGame game)
     Server->send(Server->clients[1],NetworkData(OPCODE::END_OP,"",
                                                  QString::number(static_cast<int>(game.game_info_->end_reason_)),
                                                  QString::number(static_cast<int>(game.game_info_->Winner()))));
+    while (!Server->clients.isEmpty()) {
+        Server->clients[0]->disconnectFromHost();
+        Server->clients.erase(Server->clients.begin());
+    }
 }
 
 

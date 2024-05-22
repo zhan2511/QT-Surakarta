@@ -6,8 +6,8 @@
 #include <mypushbutton.h>
 #include "mysettingsdialog.h"
 #include "ui_mysettingsdialog.h"
-#include "mynetdialog.h"
-#include "ui_mynetdialog.h"
+// #include "mynetdialog.h"
+#include "mynetwidget.h"
 #include <QDialog>
 
 
@@ -135,13 +135,20 @@ MainWindow::MainWindow(QWidget *parent)
             ui->OnlineGame->BounceUp();
         });
         QTimer::singleShot(100,this,[=](){
-            MyNetDialog *NetDialog = new MyNetDialog(this);
-            this->hide();
-            connect(NetDialog,&MyNetDialog::mainshow,this,[=](){
+            // MyNetDialog *NetDialog = new MyNetDialog(this);
+            // this->hide();
+            // connect(NetDialog,&MyNetDialog::mainshow,this,[=](){
+            //     this->show();
+            //     ui->stackedWidget->setCurrentIndex(1);
+            // });
+            // NetDialog->show();
+            MyNetWidget *NetWidget = new MyNetWidget;
+            connect(NetWidget,&MyNetWidget::mainshow,this,[=](){
                 this->show();
                 ui->stackedWidget->setCurrentIndex(1);
             });
-            NetDialog->show();
+            NetWidget->show();
+            this->hide();
         });
     });
 
